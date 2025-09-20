@@ -115,33 +115,6 @@
         </div>
       </div>
       
-      <div class="business-hours">
-        <h3 style="font-family: 'Arial', sans-serif; font-size: 25px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Business Hours</h3>
-        <table class="hours-table">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Hours</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Monday - Friday</td>
-              <td>5:00 AM - 11:00 PM</td>
-            </tr>
-            <tr>
-              <td>Saturday - Sunday</td>
-              <td>6:00 AM - 10:00 PM</td>
-            </tr>
-            <tr>
-              <td>Holidays</td>
-              <td>8:00 AM - 8:00 PM</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-      
       <div class="stats">
         <div class="stat">
           <h3>500+</h3>
@@ -167,6 +140,32 @@
           <h3>2020</h3>
           <p>Year Founded</p>
         </div>
+      </div>
+      
+      <div class="business-hours">
+        <h3 style="font-family: 'Arial', sans-serif; font-size: 25px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Business Hours</h3>
+        <table class="hours-table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monday - Friday</td>
+              <td>5:00 AM - 11:00 PM</td>
+            </tr>
+            <tr>
+              <td>Saturday - Sunday</td>
+              <td>6:00 AM - 10:00 PM</td>
+            </tr>
+            <tr>
+              <td>Holidays</td>
+              <td>8:00 AM - 8:00 PM</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -226,10 +225,6 @@
 }
 
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
   margin-bottom: 4rem;
 }
 
@@ -526,11 +521,6 @@
 }
 
 @media (max-width: 768px) {
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  
   .mission-vision {
     grid-template-columns: 1fr;
     gap: 1.5rem;
