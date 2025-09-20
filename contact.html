@@ -329,6 +329,51 @@
         outline-offset: 2px;
       }
 
+      /* Tooltip styles */
+      .tooltip {
+        position: relative;
+      }
+
+      .tooltip::after {
+        content: "Please fill out this field.";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: white;
+        padding: 0.5rem 0.75rem;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .tooltip::before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(100%);
+        border: 5px solid transparent;
+        border-top-color: #333;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .tooltip:hover::after,
+      .tooltip:hover::before {
+        opacity: 1;
+        visibility: visible;
+      }
+
       @media (max-width: 768px) {
         .main-content {
           padding: 120px 0 60px;
@@ -537,6 +582,7 @@
               <input 
                 type="text" 
                 id="name"
+                class="tooltip"
                 placeholder="Your Full Name" 
                 required 
               />
@@ -546,6 +592,7 @@
               <input 
                 type="email" 
                 id="email"
+                class="tooltip"
                 placeholder="Your Email Address" 
                 required 
               />
@@ -555,6 +602,7 @@
               <input 
                 type="tel" 
                 id="phone"
+                class="tooltip"
                 placeholder="Your Phone Number (Optional)" 
               />
             </div>
@@ -562,6 +610,7 @@
             <div class="form-group">
               <textarea 
                 id="message"
+                class="tooltip"
                 placeholder="Tell us about your fitness goals, experience level, any concerns, or questions you have. The more we know, the better we can help you succeed!" 
                 rows="5"
                 required
