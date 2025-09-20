@@ -883,9 +883,6 @@
         // Add active class to clicked button
         event.target.classList.add('active');
         
-        // Get all table cells with class content
-        const tableCells = document.querySelectorAll('.schedule-table tbody td:not(:first-child)');
-        
         // Define class categories
         const classCategories = {
           'strength': ['Strength Training', 'CrossFit', 'Strength Circuit', 'Functional Fitness'],
@@ -894,25 +891,44 @@
           'hiit': ['HIIT Blast', 'Lunch HIIT', 'HIIT Express', 'Bootcamp', 'Core Blast']
         };
         
-        tableCells.forEach(cell => {
-          const cellText = cell.textContent;
-          const hasBookButton = cell.querySelector('.book-btn');
+        // Get all table rows except header
+        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
+        
+        tableRows.forEach(row => {
+          const cells = row.querySelectorAll('td:not(:first-child)');
+          let hasMatchingClass = false;
           
-          if (hasBookButton) {
-            const className = cellText.split('\n')[0]; // Get class name before the button
+          cells.forEach(cell => {
+            const cellText = cell.textContent.trim();
+            const hasBookButton = cell.querySelector('.book-btn');
             
-            if (category === 'all') {
-              // Show all classes
-              cell.style.display = '';
-            } else {
-              // Check if class belongs to selected category
-              const categoryClasses = classCategories[category] || [];
-              if (categoryClasses.includes(className)) {
-                cell.style.display = '';
+            if (hasBookButton && cellText !== '-') {
+              const className = cellText.split('\n')[0].trim();
+              
+              if (category === 'all') {
+                cell.style.opacity = '1';
+                cell.style.pointerEvents = 'auto';
+                hasMatchingClass = true;
               } else {
-                cell.style.display = 'none';
+                const categoryClasses = classCategories[category] || [];
+                if (categoryClasses.includes(className)) {
+                  cell.style.opacity = '1';
+                  cell.style.pointerEvents = 'auto';
+                  hasMatchingClass = true;
+                } else {
+                  cell.style.opacity = '0.3';
+                  cell.style.pointerEvents = 'none';
+                }
               }
+            } else if (cellText === '-') {
+              // Empty cells
+              cell.style.opacity = category === 'all' ? '1' : '0.3';
             }
+          });
+          
+          // Show/hide entire row based on whether it has matching classes
+          if (category === 'all') {
+            row.style.display = '';
           }
         });
       }
