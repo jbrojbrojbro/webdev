@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Contact Us - ABC Fitness Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Calibri', sans-serif;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        color: #00231C;
+        background: white;
+      }
+
+      .header {
+        background: #D3D3D3;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 0;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .header.scrolled {
+        background: #D3D3D3;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo h2 {
+        font-family: 'Arial', sans-serif;
+        color: #00231C;
+        font-weight: bold;
+        font-size: 25px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        font-family: 'Calibri', sans-serif;
+        text-decoration: none;
+        color: #00231C;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: #155EBC;
+      }
+
+      .nav-links a:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        color: #155EBC;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #155EBC;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .main-content {
+        padding: 140px 0 80px;
+      }
+
+      .section-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #00231C;
+      }
+
+      .section-subtitle {
+        font-family: 'Comfortaa', sans-serif;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        text-align: center;
+        color: #00231C;
+        opacity: 0.7;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .contact-item {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .contact-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+
+      .contact-item h3 {
+        font-family: 'Arial', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        margin-bottom: 0.5rem;
+        color: #00231C;
+      }
+
+      .contact-item p {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        color: #00231C;
+        opacity: 0.7;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
+      .contact-form {
+        background: #D3D3D3;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 2px solid #00231C;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #00231C;
+        border-radius: 10px;
+        background: white;
+        color: #00231C;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #155EBC;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .form-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .btn-submit {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem 2rem;
+        background: #155EBC;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-submit:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(21, 94, 188, 0.3);
+      }
+
+      .btn-submit:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .btn-clear {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem 2rem;
+        background: #777777;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-clear:hover {
+        background: #555555;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(119, 119, 119, 0.3);
+      }
+
+      .btn-clear:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 120px 0 60px;
+        }
+        
+        .section-title {
+          font-size: 24px;
+          line-height: 1.4;
+        }
+        
+        .section-subtitle {
+          font-size: 14px;
+          margin-bottom: 40px;
+        }
+        
+        .container {
+          padding: 0 16px;
+        }
+        
+        .nav-links {
+          gap: 0.75rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .nav-links a {
+          font-size: 13px;
+          padding: 0.25rem 0.5rem;
+        }
+        
+        .contact-content {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+        
+        .contact-form {
+          padding: 1.5rem;
+        }
+        
+        .form-buttons {
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+        
+        .contact-item h3 {
+          font-size: 20px;
+        }
+        
+        .contact-item p {
+          font-size: 15px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+          font-size: 15px;
+          padding: 0.875rem;
+        }
+        
+        .btn-submit,
+        .btn-clear {
+          font-size: 15px;
+          padding: 0.875rem 1.5rem;
+          width: 100%;
+          max-width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <h2>ABC Fitness Studio</h2>
+          </div>
+          
+          <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/class-schedule.html">Class Schedule</a></li>
+            <li><a href="/merchandise.html">Merchandise</a></li>
+            <li><a href="/#trainers">Trainers</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        <h1 class="section-title">Connect With Our Fitness Community</h1>
+        <p class="section-subtitle">
+          Ready to transform your life? Join our supportive fitness family and let us guide you on your wellness journey. We're here to answer your questions, understand your goals, and help you take the first step toward a healthier, stronger you.
+        </p>
+        
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">🤝</div>
+              <div>
+                <h3>Join Our Community</h3>
+                <p>Become part of a supportive fitness family where every member matters. Our experienced team is dedicated to helping you achieve your personal wellness goals in a welcoming, inclusive environment.</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h3>Visit Our Studio</h3>
+                <p>123 Fitness Street<br>Wellness City, WC 12345<br><br>Take a tour of our state-of-the-art facility and meet our friendly team. We'd love to show you around and discuss how we can support your fitness journey.</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <h3>Speak With Our Team</h3>
+                <p>(555) 123-4567<br><br>Our knowledgeable staff is ready to answer your questions about memberships, classes, personal training, and how to get started. Call us during business hours for immediate assistance.</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <h3>Send Us a Message</h3>
+                <p>info@abcfitnessstudio.com<br><br>Prefer email? We respond to all inquiries within 24 hours. Whether you have questions about our services or want to share your fitness goals, we're here to help.</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">🕒</div>
+              <div>
+                <h3>When We're Here</h3>
+                <p>Mon-Fri: 5:00 AM - 11:00 PM<br>
+                   Sat-Sun: 6:00 AM - 10:00 PM<br><br>Extended hours to fit your busy schedule. Early morning or late evening, we're here when you need us most.</p>
+              </div>
+            </div>
+          </div>
+          
+          <form class="contact-form" onsubmit="submitForm(event)">
+            <h3 style="font-family: 'Arial', sans-serif; font-size: 25px; font-weight: bold; color: #00231C; margin-bottom: 1rem; text-align: center;">Start Your Fitness Journey</h3>
+            <p style="font-family: 'Calibri', sans-serif; font-size: 16px; color: #00231C; opacity: 0.7; line-height: 1.6; letter-spacing: 0.02em; margin-bottom: 1.5rem; text-align: center;">Tell us about yourself and your goals. We'll create a personalized plan just for you.</p>
+            
+            <div class="form-group">
+              <input 
+                type="text" 
+                id="name"
+                placeholder="Your Full Name" 
+                required 
+              />
+            </div>
+            
+            <div class="form-group">
+              <input 
+                type="email" 
+                id="email"
+                placeholder="Your Email Address" 
+                required 
+              />
+            </div>
+            
+            <div class="form-group">
+              <input 
+                type="tel" 
+                id="phone"
+                placeholder="Your Phone Number (Optional)" 
+              />
+            </div>
+            
+            <div class="form-group">
+              <textarea 
+                id="message"
+                placeholder="Tell us about your fitness goals, experience level, any concerns, or questions you have. The more we know, the better we can help you succeed!" 
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            
+            <div class="form-buttons">
+              <button type="submit" class="btn-submit">Start My Journey</button>
+              <button type="button" onclick="clearForm()" class="btn-clear">Clear Form</button>
+            </div>
+          </form>
+        </div>
+        
+        <div style="background: #f8f9fa; border-radius: 15px; padding: 2rem; margin-top: 3rem; text-align: center; border: 2px solid #155EBC;">
+          <h3 style="font-family: 'Arial', sans-serif; font-size: 25px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Why Choose ABC Fitness Studio?</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            <div>
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">💪</div>
+              <h4 style="font-family: 'Arial', sans-serif; font-size: 18px; font-weight: bold; color: #00231C; margin-bottom: 0.5rem;">Expert Guidance</h4>
+              <p style="font-family: 'Calibri', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; line-height: 1.6; letter-spacing: 0.02em;">Certified trainers with years of experience helping people just like you achieve their goals.</p>
+            </div>
+            <div>
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
+              <h4 style="font-family: 'Arial', sans-serif; font-size: 18px; font-weight: bold; color: #00231C; margin-bottom: 0.5rem;">Welcoming Environment</h4>
+              <p style="font-family: 'Calibri', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; line-height: 1.6; letter-spacing: 0.02em;">A judgment-free zone where everyone feels comfortable, regardless of fitness level.</p>
+            </div>
+            <div>
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+              <h4 style="font-family: 'Arial', sans-serif; font-size: 18px; font-weight: bold; color: #00231C; margin-bottom: 0.5rem;">Personalized Approach</h4>
+              <p style="font-family: 'Calibri', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; line-height: 1.6; letter-spacing: 0.02em;">Every program is tailored to your unique needs, goals, and lifestyle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer style="background: #D3D3D3; padding: 2rem 0; margin-top: 3rem;">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 2rem;">
+          <div style="flex: 1; min-width: 300px;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Subscribe to Our Newsletter</h4>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+              <input 
+                type="email" 
+                id="newsletter-email"
+                placeholder="Enter your email" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; flex: 1; padding: 0.75rem; border: 2px solid #00231C; border-radius: 5px; background: white; color: #00231C;"
+              />
+              <button 
+                onclick="subscribeNewsletter()" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #00231C; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;"
+                onmouseover="this.style.background='#155EBC'" 
+                onmouseout="this.style.background='#00231C'"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
+          
+          <div style="text-align: right;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Follow Us</h4>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Facebook">📘</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Instagram">📷</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Twitter">🐦</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="YouTube">📺</a>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <a href="/" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Home</a>
+          <a href="/merchandise.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Merchandise</a>
+          <a href="/class-schedule.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Schedule</a>
+          <a href="/contact.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Contact</a>
+        </div>
+        
+        <div style="text-align: center;">
+          <p style="font-family: 'Comfortaa', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; margin: 0;">&copy; 2025 ABC Fitness Studio. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Floating header functionality
+      let isScrolled = false;
+      
+      function handleScroll() {
+        const header = document.querySelector('.header');
+        const shouldBeScrolled = window.scrollY > 50;
+        
+        if (shouldBeScrolled !== isScrolled) {
+          isScrolled = shouldBeScrolled;
+          if (isScrolled) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }
+      }
+      
+      
+      function subscribeNewsletter() {
+        const email = document.getElementById('newsletter-email').value;
+        if (email) {
+          alert('Thank you for subscribing!');
+          document.getElementById('newsletter-email').value = '';
+        } else {
+          alert('Please enter a valid email address.');
+        }
+      }
+      
+      // Add focus styles for newsletter input and button
+      document.getElementById('newsletter-email').addEventListener('focus', function() {
+        this.style.outline = '2px solid #155EBC';
+        this.style.outlineOffset = '2px';
+        this.style.boxShadow = '0 0 0 3px rgba(21, 94, 188, 0.3)';
+      });
+      
+      document.getElementById('newsletter-email').addEventListener('blur', function() {
+        this.style.outline = 'none';
+        this.style.boxShadow = 'none';
+      });
+      
+      function submitForm(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const message = document.getElementById('message').value;
+        
+        // Create contact data object
+        const contactData = {
+          id: Date.now() + Math.random(), // Unique ID
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+          submittedAt: new Date().toISOString()
+        };
+        
+        // Get existing contacts from localStorage
+        let contacts = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+        
+        // Add new contact to array
+        contacts.push(contactData);
+        
+        // Save to localStorage
+        localStorage.setItem('contactSubmissions', JSON.stringify(contacts));
+        
+        // Show personalized success message
+        alert(`Thank you for your message, ${name}! We're excited to help you start your fitness journey. Our team will contact you within 24 hours to discuss your goals and answer any questions you may have.`);
+        
+        clearForm();
+      }
+
+      function clearForm() {
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('message').value = '';
+      }
+    </script>
+  </body>
+</html>

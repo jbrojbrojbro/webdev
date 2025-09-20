@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Class Schedule - ABC Fitness Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Calibri', sans-serif;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        color: #00231C;
+        background: white;
+      }
+
+      .header {
+        background: #D3D3D3;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 0;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .header.scrolled {
+        background: #D3D3D3;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo h2 {
+        font-family: 'Arial', sans-serif;
+        color: #00231C;
+        font-weight: bold;
+        font-size: 25px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        font-family: 'Calibri', sans-serif;
+        text-decoration: none;
+        color: #00231C;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: #155EBC;
+      }
+
+      .nav-links a:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        color: #155EBC;
+      }
+
+      .main-content {
+        padding: 140px 0 80px;
+      }
+
+      .section-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #00231C;
+      }
+
+      .section-subtitle {
+        font-family: 'Comfortaa', sans-serif;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        text-align: center;
+        color: #00231C;
+        opacity: 0.7;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .schedule-filters {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .filter-btn {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 0.75rem 1.5rem;
+        border: 2px solid #155EBC;
+        background: white;
+        color: #155EBC;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: #155EBC;
+        color: white;
+      }
+
+      .filter-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .schedule-table-container {
+        overflow-x: auto;
+        margin-bottom: 3rem;
+      }
+
+      .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 3px solid #20458E;
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+      }
+
+      .schedule-table th,
+      .schedule-table td {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #20458E;
+        color: #00231C;
+      }
+
+      .schedule-table th {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        background: #20458E;
+        color: white;
+      }
+
+      .schedule-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .class-card {
+        background: white;
+        border: 2px solid #155EBC;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+
+      .class-name {
+        font-family: 'Arial', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #00231C;
+        margin-bottom: 0.5rem;
+      }
+
+      .class-details {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        color: #00231C;
+        opacity: 0.7;
+      }
+
+      .book-btn {
+        font-family: 'Calibri', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 0.5rem 1rem;
+        background: #155EBC;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+      }
+
+      .book-btn:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(21, 94, 188, 0.3);
+      }
+
+      .book-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .booking-modal {
+          padding: 1rem;
+        }
+        
+        .modal-content {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+        
+        .main-content {
+          padding: 120px 0 60px;
+        }
+        
+        .section-title {
+          font-size: 24px;
+          line-height: 1.4;
+        }
+        
+        .section-subtitle {
+          font-size: 14px;
+          margin-bottom: 40px;
+        }
+        
+        .container {
+          padding: 0 16px;
+        }
+        
+        .nav-links {
+          gap: 0.75rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .nav-links a {
+          font-size: 13px;
+          padding: 0.25rem 0.5rem;
+        }
+        
+        .schedule-filters {
+          justify-content: center;
+        }
+        
+        .filter-btn {
+          font-size: 13px;
+          padding: 0.5rem 0.75rem;
+        }
+        
+        .schedule-table th,
+        .schedule-table td {
+          font-size: 14px;
+          padding: 0.75rem 0.5rem;
+        }
+        
+        .class-name {
+          font-size: 20px;
+        }
+        
+        .class-details {
+          font-size: 15px;
+        }
+      }
+
+      .booking-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #155EBC;
+        padding-bottom: 1rem;
+      }
+
+      .modal-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #00231C;
+        margin: 0;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #00231C;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .close-btn:hover {
+        background-color: #f0f0f0;
+        color: #155EBC;
+      }
+
+      .close-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .booking-list {
+        margin-bottom: 2rem;
+      }
+
+      .booking-item {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .booking-details h4 {
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #00231C;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .booking-details p {
+        font-family: 'Calibri', sans-serif;
+        font-size: 14px;
+        color: #00231C;
+        opacity: 0.7;
+        margin: 0;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
+      .remove-booking {
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-family: 'Calibri', sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .remove-booking:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+      }
+
+      .remove-booking:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .modal-btn {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modal-btn.primary {
+        background: #155EBC;
+        color: white;
+      }
+
+      .modal-btn.primary:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(21, 94, 188, 0.3);
+      }
+
+      .modal-btn.secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .modal-btn.secondary:hover {
+        background: #545b62;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(108, 117, 125, 0.3);
+      }
+
+      .modal-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .empty-bookings {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
+      .view-bookings-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #155EBC;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 1.5rem;
+        font-family: 'Calibri', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(21, 94, 188, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1500;
+      }
+
+      .view-bookings-btn:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(21, 94, 188, 0.4);
+      }
+
+      .view-bookings-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .booking-count {
+        background: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <h2>ABC Fitness Studio</h2>
+          </div>
+          
+          <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/class-schedule">Class Schedule</a></li>
+            <li><a href="/merchandise.html">Merchandise</a></li>
+            <li><a href="/#trainers">Trainers</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        <h1 class="section-title">Class Schedule</h1>
+        <p class="section-subtitle">
+          Join our energizing group fitness classes designed for all fitness levels
+        </p>
+        
+        <div class="schedule-filters">
+          <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
+          <button class="filter-btn" onclick="filterClasses('strength')">Strength</button>
+          <button class="filter-btn" onclick="filterClasses('cardio')">Cardio</button>
+          <button class="filter-btn" onclick="filterClasses('yoga')">Yoga</button>
+          <button class="filter-btn" onclick="filterClasses('hiit')">HIIT</button>
+        </div>
+
+        <div class="schedule-table-container">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>6:00 AM</strong></td>
+                <td>Morning Yoga<br><button class="book-btn" onclick="bookClass('Morning Yoga', 'Monday 6:00 AM')">Book</button></td>
+                <td>HIIT Blast<br><button class="book-btn" onclick="bookClass('HIIT Blast', 'Tuesday 6:00 AM')">Book</button></td>
+                <td>Morning Yoga<br><button class="book-btn" onclick="bookClass('Morning Yoga', 'Wednesday 6:00 AM')">Book</button></td>
+                <td>HIIT Blast<br><button class="book-btn" onclick="bookClass('HIIT Blast', 'Thursday 6:00 AM')">Book</button></td>
+                <td>Morning Yoga<br><button class="book-btn" onclick="bookClass('Morning Yoga', 'Friday 6:00 AM')">Book</button></td>
+                <td>Weekend Warrior<br><button class="book-btn" onclick="bookClass('Weekend Warrior', 'Saturday 6:00 AM')">Book</button></td>
+                <td>Gentle Flow<br><button class="book-btn" onclick="bookClass('Gentle Flow', 'Sunday 6:00 AM')">Book</button></td>
+              </tr>
+              <tr>
+                <td><strong>7:00 AM</strong></td>
+                <td>Strength Training<br><button class="book-btn" onclick="bookClass('Strength Training', 'Monday 7:00 AM')">Book</button></td>
+                <td>Cardio Kickstart<br><button class="book-btn" onclick="bookClass('Cardio Kickstart', 'Tuesday 7:00 AM')">Book</button></td>
+                <td>Strength Training<br><button class="book-btn" onclick="bookClass('Strength Training', 'Wednesday 7:00 AM')">Book</button></td>
+                <td>Cardio Kickstart<br><button class="book-btn" onclick="bookClass('Cardio Kickstart', 'Thursday 7:00 AM')">Book</button></td>
+                <td>Strength Training<br><button class="book-btn" onclick="bookClass('Strength Training', 'Friday 7:00 AM')">Book</button></td>
+                <td>Bootcamp<br><button class="book-btn" onclick="bookClass('Bootcamp', 'Saturday 7:00 AM')">Book</button></td>
+                <td>Restorative Yoga<br><button class="book-btn" onclick="bookClass('Restorative Yoga', 'Sunday 7:00 AM')">Book</button></td>
+              </tr>
+              <tr>
+                <td><strong>9:00 AM</strong></td>
+                <td>Pilates<br><button class="book-btn" onclick="bookClass('Pilates', 'Monday 9:00 AM')">Book</button></td>
+                <td>Zumba<br><button class="book-btn" onclick="bookClass('Zumba', 'Tuesday 9:00 AM')">Book</button></td>
+                <td>Pilates<br><button class="book-btn" onclick="bookClass('Pilates', 'Wednesday 9:00 AM')">Book</button></td>
+                <td>Zumba<br><button class="book-btn" onclick="bookClass('Zumba', 'Thursday 9:00 AM')">Book</button></td>
+                <td>Pilates<br><button class="book-btn" onclick="bookClass('Pilates', 'Friday 9:00 AM')">Book</button></td>
+                <td>Functional Fitness<br><button class="book-btn" onclick="bookClass('Functional Fitness', 'Saturday 9:00 AM')">Book</button></td>
+                <td>Meditation<br><button class="book-btn" onclick="bookClass('Meditation', 'Sunday 9:00 AM')">Book</button></td>
+              </tr>
+              <tr>
+                <td><strong>12:00 PM</strong></td>
+                <td>Lunch HIIT<br><button class="book-btn" onclick="bookClass('Lunch HIIT', 'Monday 12:00 PM')">Book</button></td>
+                <td>Power Yoga<br><button class="book-btn" onclick="bookClass('Power Yoga', 'Tuesday 12:00 PM')">Book</button></td>
+                <td>Lunch HIIT<br><button class="book-btn" onclick="bookClass('Lunch HIIT', 'Wednesday 12:00 PM')">Book</button></td>
+                <td>Power Yoga<br><button class="book-btn" onclick="bookClass('Power Yoga', 'Thursday 12:00 PM')">Book</button></td>
+                <td>Lunch HIIT<br><button class="book-btn" onclick="bookClass('Lunch HIIT', 'Friday 12:00 PM')">Book</button></td>
+                <td>Core Blast<br><button class="book-btn" onclick="bookClass('Core Blast', 'Saturday 12:00 PM')">Book</button></td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>5:30 PM</strong></td>
+                <td>CrossFit<br><button class="book-btn" onclick="bookClass('CrossFit', 'Monday 5:30 PM')">Book</button></td>
+                <td>Spin Class<br><button class="book-btn" onclick="bookClass('Spin Class', 'Tuesday 5:30 PM')">Book</button></td>
+                <td>CrossFit<br><button class="book-btn" onclick="bookClass('CrossFit', 'Wednesday 5:30 PM')">Book</button></td>
+                <td>Spin Class<br><button class="book-btn" onclick="bookClass('Spin Class', 'Thursday 5:30 PM')">Book</button></td>
+                <td>CrossFit<br><button class="book-btn" onclick="bookClass('CrossFit', 'Friday 5:30 PM')">Book</button></td>
+                <td>Dance Fitness<br><button class="book-btn" onclick="bookClass('Dance Fitness', 'Saturday 5:30 PM')">Book</button></td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>6:30 PM</strong></td>
+                <td>Evening Yoga<br><button class="book-btn" onclick="bookClass('Evening Yoga', 'Monday 6:30 PM')">Book</button></td>
+                <td>Strength Circuit<br><button class="book-btn" onclick="bookClass('Strength Circuit', 'Tuesday 6:30 PM')">Book</button></td>
+                <td>Evening Yoga<br><button class="book-btn" onclick="bookClass('Evening Yoga', 'Wednesday 6:30 PM')">Book</button></td>
+                <td>Strength Circuit<br><button class="book-btn" onclick="bookClass('Strength Circuit', 'Thursday 6:30 PM')">Book</button></td>
+                <td>Evening Yoga<br><button class="book-btn" onclick="bookClass('Evening Yoga', 'Friday 6:30 PM')">Book</button></td>
+                <td>HIIT Express<br><button class="book-btn" onclick="bookClass('HIIT Express', 'Saturday 6:30 PM')">Book</button></td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>7:30 PM</strong></td>
+                <td>Kickboxing<br><button class="book-btn" onclick="bookClass('Kickboxing', 'Monday 7:30 PM')">Book</button></td>
+                <td>Barre<br><button class="book-btn" onclick="bookClass('Barre', 'Tuesday 7:30 PM')">Book</button></td>
+                <td>Kickboxing<br><button class="book-btn" onclick="bookClass('Kickboxing', 'Wednesday 7:30 PM')">Book</button></td>
+                <td>Barre<br><button class="book-btn" onclick="bookClass('Barre', 'Thursday 7:30 PM')">Book</button></td>
+                <td>Kickboxing<br><button class="book-btn" onclick="bookClass('Kickboxing', 'Friday 7:30 PM')">Book</button></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="class-descriptions">
+          <div class="class-card">
+            <h3 class="class-name">HIIT Blast</h3>
+            <p class="class-details">High-intensity interval training designed to burn calories and build endurance. 45 minutes of challenging exercises.</p>
+          </div>
+          
+          <div class="class-card">
+            <h3 class="class-name">Power Yoga</h3>
+            <p class="class-details">Dynamic yoga flow combining strength, flexibility, and mindfulness. Suitable for intermediate to advanced practitioners.</p>
+          </div>
+          
+          <div class="class-card">
+            <h3 class="class-name">CrossFit</h3>
+            <p class="class-details">Functional fitness combining weightlifting, cardio, and bodyweight exercises. Build strength and conditioning.</p>
+          </div>
+          
+          <div class="class-card">
+            <h3 class="class-name">Zumba</h3>
+            <p class="class-details">Dance fitness party combining Latin rhythms with easy-to-follow moves. Fun cardio workout for all levels.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Floating View Bookings Button -->
+      <button class="view-bookings-btn" onclick="showBookingsModal()" style="display: none;">
+        View Bookings <span class="booking-count" id="booking-count">0</span>
+      </button>
+
+      <!-- Booking Modal -->
+      <div id="bookingModal" class="booking-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">My Class Bookings</h3>
+            <button class="close-btn" onclick="closeBookingsModal()">&times;</button>
+          </div>
+          
+          <div id="bookingList" class="booking-list">
+            <!-- Bookings will be populated here -->
+          </div>
+          
+          <div class="modal-actions">
+            <button class="modal-btn primary" onclick="processBookings()">Confirm Bookings</button>
+            <button class="modal-btn secondary" onclick="clearAllBookings()">Clear All Bookings</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer style="background: #D3D3D3; padding: 2rem 0; margin-top: 3rem;">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 2rem;">
+          <div style="flex: 1; min-width: 300px;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Subscribe to Our Newsletter</h4>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+              <input 
+                type="email" 
+                id="newsletter-email"
+                placeholder="Enter your email" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; flex: 1; padding: 0.75rem; border: 2px solid #00231C; border-radius: 5px; background: white; color: #00231C;"
+              />
+              <button 
+                onclick="subscribeNewsletter()" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #00231C; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;"
+                onmouseover="this.style.background='#155EBC'" 
+                onmouseout="this.style.background='#00231C'"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
+          
+          <div style="text-align: right;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Follow Us</h4>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Facebook">📘</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Instagram">📷</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Twitter">🐦</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="YouTube">📺</a>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <a href="/" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Home</a>
+          <a href="/merchandise.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Merchandise</a>
+          <a href="/class-schedule.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Schedule</a>
+          <a href="/contact.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Contact</a>
+        </div>
+        
+        <div style="text-align: center;">
+          <p style="font-family: 'Comfortaa', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; margin: 0;">&copy; 2025 ABC Fitness Studio. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Floating header functionality
+      let isScrolled = false;
+      
+      function handleScroll() {
+        const header = document.querySelector('.header');
+        const shouldBeScrolled = window.scrollY > 50;
+        
+        if (shouldBeScrolled !== isScrolled) {
+          isScrolled = shouldBeScrolled;
+          if (isScrolled) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      
+      function subscribeNewsletter() {
+        const email = document.getElementById('newsletter-email').value;
+        if (email) {
+          alert('Thank you for subscribing!');
+          document.getElementById('newsletter-email').value = '';
+        } else {
+          alert('Please enter a valid email address.');
+        }
+      }
+      
+      // Add focus styles for newsletter input and button
+      document.getElementById('newsletter-email').addEventListener('focus', function() {
+        this.style.outline = '2px solid #155EBC';
+        this.style.outlineOffset = '2px';
+        this.style.boxShadow = '0 0 0 3px rgba(21, 94, 188, 0.3)';
+      });
+      
+      document.getElementById('newsletter-email').addEventListener('blur', function() {
+        this.style.outline = 'none';
+        this.style.boxShadow = 'none';
+      });
+      
+      function filterClasses(category) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        event.target.classList.add('active');
+        
+        // Here you would implement the actual filtering logic
+        console.log('Filtering classes by:', category);
+      }
+      
+      function bookClass(className, timeSlot) {
+        // Get existing bookings from sessionStorage
+        let bookings = JSON.parse(sessionStorage.getItem('classBookings') || '[]');
+        
+        // Check if class is already booked
+        const existingBooking = bookings.find(booking => 
+          booking.class === className && booking.time === timeSlot
+        );
+        
+        if (existingBooking) {
+          alert('You have already booked this class!');
+          return;
+        }
+        
+        // Create booking object
+        const booking = {
+          id: Date.now() + Math.random(), // Unique ID
+          class: className,
+          time: timeSlot,
+          bookedAt: new Date().toISOString()
+        };
+        
+        // Add to bookings array
+        bookings.push(booking);
+        
+        // Save to sessionStorage
+        sessionStorage.setItem('classBookings', JSON.stringify(bookings));
+        
+        // Update booking count display
+        updateBookingCount();
+        
+        // Show success message
+        alert('Class booked successfully!');
+      }
+      
+      function updateBookingCount() {
+        const bookings = JSON.parse(sessionStorage.getItem('classBookings') || '[]');
+        const count = bookings.length;
+        const countElement = document.getElementById('booking-count');
+        const viewBtn = document.querySelector('.view-bookings-btn');
+        
+        if (count > 0) {
+          countElement.textContent = count;
+          viewBtn.style.display = 'block';
+        } else {
+          viewBtn.style.display = 'none';
+        }
+      }
+      
+      function showBookingsModal() {
+        const modal = document.getElementById('bookingModal');
+        const bookingList = document.getElementById('bookingList');
+        const bookings = JSON.parse(sessionStorage.getItem('classBookings') || '[]');
+        
+        // Clear existing content
+        bookingList.innerHTML = '';
+        
+        if (bookings.length === 0) {
+          bookingList.innerHTML = '<div class="empty-bookings">No classes booked yet.</div>';
+        } else {
+          bookings.forEach(booking => {
+            const bookingItem = document.createElement('div');
+            bookingItem.className = 'booking-item';
+            bookingItem.innerHTML = `
+              <div class="booking-details">
+                <h4>${booking.class}</h4>
+                <p>${booking.time}</p>
+                <p>Booked: ${new Date(booking.bookedAt).toLocaleDateString()}</p>
+              </div>
+              <button class="remove-booking" onclick="removeBooking('${booking.id}')">Remove</button>
+            `;
+            bookingList.appendChild(bookingItem);
+          });
+        }
+        
+        modal.style.display = 'block';
+        
+        // Focus management for accessibility
+        const closeBtn = modal.querySelector('.close-btn');
+        closeBtn.focus();
+      }
+      
+      function closeBookingsModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'none';
+        
+        // Return focus to the view bookings button
+        document.querySelector('.view-bookings-btn').focus();
+      }
+      
+      function removeBooking(bookingId) {
+        let bookings = JSON.parse(sessionStorage.getItem('classBookings') || '[]');
+        bookings = bookings.filter(booking => booking.id != bookingId);
+        sessionStorage.setItem('classBookings', JSON.stringify(bookings));
+        
+        // Refresh the modal display
+        showBookingsModal();
+        updateBookingCount();
+      }
+      
+      function clearAllBookings() {
+        if (confirm('Are you sure you want to clear all bookings?')) {
+          sessionStorage.removeItem('classBookings');
+          updateBookingCount();
+          closeBookingsModal();
+          alert('All bookings have been cleared.');
+        }
+      }
+      
+      function processBookings() {
+        const bookings = JSON.parse(sessionStorage.getItem('classBookings') || '[]');
+        
+        if (bookings.length === 0) {
+          alert('No bookings to process.');
+          return;
+        }
+        
+        // Clear bookings after processing
+        sessionStorage.removeItem('classBookings');
+        updateBookingCount();
+        closeBookingsModal();
+        
+        alert('Thank you for your booking! Your classes have been confirmed.');
+      }
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(event) {
+        const modal = document.getElementById('bookingModal');
+        if (event.target === modal) {
+          closeBookingsModal();
+        }
+      });
+      
+      // Close modal with Escape key
+      window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          const modal = document.getElementById('bookingModal');
+          if (modal.style.display === 'block') {
+            closeBookingsModal();
+          }
+        }
+      });
+      
+      // Initialize booking count on page load
+      window.addEventListener('load', function() {
+        updateBookingCount();
+      });
+      
+      // Initialize on DOM content loaded as well
+      document.addEventListener('DOMContentLoaded', function() {
+        updateBookingCount();
+      });
+    </script>
+  </body>
+</html>
