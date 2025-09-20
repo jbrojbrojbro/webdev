@@ -883,8 +883,38 @@
         // Add active class to clicked button
         event.target.classList.add('active');
         
-        // Here you would implement the actual filtering logic
-        console.log('Filtering classes by:', category);
+        // Get all table cells with class content
+        const tableCells = document.querySelectorAll('.schedule-table tbody td:not(:first-child)');
+        
+        // Define class categories
+        const classCategories = {
+          'strength': ['Strength Training', 'CrossFit', 'Strength Circuit', 'Functional Fitness'],
+          'cardio': ['HIIT Blast', 'Cardio Kickstart', 'Lunch HIIT', 'Spin Class', 'Zumba', 'Dance Fitness', 'HIIT Express', 'Kickboxing'],
+          'yoga': ['Morning Yoga', 'Power Yoga', 'Evening Yoga', 'Gentle Flow', 'Restorative Yoga'],
+          'hiit': ['HIIT Blast', 'Lunch HIIT', 'HIIT Express', 'Bootcamp', 'Core Blast']
+        };
+        
+        tableCells.forEach(cell => {
+          const cellText = cell.textContent;
+          const hasBookButton = cell.querySelector('.book-btn');
+          
+          if (hasBookButton) {
+            const className = cellText.split('\n')[0]; // Get class name before the button
+            
+            if (category === 'all') {
+              // Show all classes
+              cell.style.display = '';
+            } else {
+              // Check if class belongs to selected category
+              const categoryClasses = classCategories[category] || [];
+              if (categoryClasses.includes(className)) {
+                cell.style.display = '';
+              } else {
+                cell.style.display = 'none';
+              }
+            }
+          }
+        });
       }
       
       function bookClass(className, timeSlot) {
