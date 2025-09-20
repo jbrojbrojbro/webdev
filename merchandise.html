@@ -299,7 +299,6 @@
         box-shadow: 0 4px 15px rgba(21, 94, 188, 0.3);
         transition: all 0.3s ease;
         z-index: 1500;
-        display: none;
       }
 
       .floating-cart:hover {
@@ -336,14 +335,13 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
+        display: flex;
         padding: 2rem;
       }
 
       .cart-modal-content {
         background-color: white;
+        margin: 5% auto;
         padding: 2rem;
         border-radius: 15px;
         width: 90%;
@@ -1014,29 +1012,29 @@
     </main>
 
     <!-- Floating Cart Button -->
-    <button class="floating-cart" onclick="showCartModal()" style="display: none;">
-      View Cart <span class="cart-count" id="cart-count">0</span>
+    <button class="floating-cart" onclick="showCartModal()" id="floating-cart-btn" style="display: none;">
+      View Cart <span class="cart-count" id="booking-count">0</span>
     </button>
 
     <!-- Cart Modal -->
-    <div id="cartModal" class="cart-modal" onclick="closeCartModal()">
-      <div class="cart-modal-content" onclick="event.stopPropagation()">
+    <div id="cartModal" class="cart-modal" style="display: none;">
+      <div class="cart-modal-content">
         <div class="cart-header">
-          <h3 class="cart-title">Shopping Cart</h3>
+          <h3 class="cart-title">Merchandise Cart</h3>
           <button class="close-cart-btn" onclick="closeCartModal()">&times;</button>
         </div>
         
-        <div id="cartItems" class="cart-items">
+        <div id="cart-items" class="cart-items">
           <!-- Cart items will be populated here -->
         </div>
         
-        <div id="cartTotal" class="cart-total" style="display: none;">
-          <h3>Total: $<span id="cart-total-amount">0.00</span></h3>
+        <div id="cart-total-section" class="cart-total" style="display: none;">
+          <h3>Total: $<span id="cart-total">0</span></h3>
         </div>
         
         <div class="cart-actions">
-          <button class="cart-btn primary" onclick="checkout()">Checkout</button>
-          <button class="cart-btn secondary" onclick="clearCart()">Clear Cart</button>
+          <button class="cart-btn primary" onclick="checkout()">Proceed to Checkout</button>
+          <button class="cart-btn secondary" onclick="clearAllItems()">Clear Cart</button>
         </div>
       </div>
     </div>
@@ -1089,7 +1087,7 @@
     </footer>
 
     <script>
-      // Cart functionality
+      // Cart functionality - exact copy from home page
       const cartItems = [];
       let showEmailError = false;
       let emailErrorMessage = '';
@@ -1098,12 +1096,12 @@
         return cartItems.reduce((sum, item) => sum + item.price, 0);
       };
 
-      const addToCart = (planName, price, size) => {
+      const addToCart = (planName, price) => {
         // Check if plan is already in cart
-        const existingItem = cartItems.find(item => item.name === planName && item.size === size);
+        const existingItem = cartItems.find(item => item.name === planName);
         
         if (existingItem) {
-          alert('This item is already in your cart!');
+          alert('This plan is already in your cart!');
           return;
         }
         
@@ -1111,39 +1109,38 @@
           id: Date.now() + Math.random(),
           name: planName,
           price: price,
-          size: size,
           addedAt: new Date().toISOString()
         };
         
         cartItems.push(item);
-        updateCartCount();
-        alert(`${planName} (${size}) added to cart!`);
+        alert(`${planName} plan added to cart!`);
+        updateCartDisplay();
       };
 
       const removeFromCart = (itemId) => {
-        const index = cartItems.findIndex(item => item.id === itemId);
+        const index = cartItems.findIndex(item => item.id == itemId);
         if (index > -1) {
           cartItems.splice(index, 1);
+          updateCartDisplay();
           showCartModal();
-          updateCartCount();
         }
       };
 
-      const clearCart = () => {
+      const clearAllItems = () => {
         if (confirm('Are you sure you want to clear your cart?')) {
           cartItems.length = 0;
-          document.getElementById('cartModal').style.display = 'none';
-          updateCartCount();
+          updateCartDisplay();
+          closeCartModal();
           alert('Cart has been cleared.');
         }
       };
 
       const showCartModal = () => {
         const modal = document.getElementById('cartModal');
-        const cartItemsContainer = document.getElementById('cartItems');
-        const cartTotalContainer = document.getElementById('cartTotal');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalContainer = document.getElementById('cart-total-section');
         
-        modal.style.display = 'flex';
+        modal.style.display = 'block';
         
         // Clear existing content
         cartItemsContainer.innerHTML = '';
@@ -1158,12 +1155,11 @@
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
               <div class="cart-item-details">
-                <h4>${item.name}</h4>
-                <p>Size: ${item.size}</p>
+                <h4>${item.name} Plan</h4>
                 <p>Added: ${new Date(item.addedAt).toLocaleDateString()}</p>
               </div>
               <div class="cart-item-actions">
-                <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                <span class="cart-item-price">$${item.price}/month</span>
                 <button class="remove-item" onclick="removeFromCart('${item.id}')">Remove</button>
               </div>
             `;
@@ -1171,12 +1167,19 @@
           });
           
           // Update total
-          document.getElementById('cart-total-amount').textContent = cartTotal().toFixed(2);
+          document.getElementById('cart-total').textContent = cartTotal();
         }
+        
+        // Focus management for accessibility
+        const closeBtn = modal.querySelector('.close-cart-btn');
+        closeBtn.focus();
       };
 
       const closeCartModal = () => {
         document.getElementById('cartModal').style.display = 'none';
+        
+        // Return focus to the view cart button
+        document.getElementById('floating-cart-btn').focus();
       };
 
       const checkout = () => {
@@ -1186,26 +1189,26 @@
         }
         
         const total = cartTotal();
-        const itemCount = cartItems.length;
+        const planNames = cartItems.map(item => item.name).join(', ');
         
         // Clear cart after checkout
         cartItems.length = 0;
-        updateCartCount();
+        updateCartDisplay();
         closeCartModal();
         
-        alert(`Thank you for your purchase! You bought ${itemCount} item(s) for $${total.toFixed(2)}. Your order will be processed shortly.`);
+        alert(`Thank you for choosing ABC Fitness Studio! You've selected: ${planNames}. Total: $${total}/month. We'll contact you to complete your membership registration.`);
       };
 
-      const updateCartCount = () => {
+      const updateCartDisplay = () => {
         const count = cartItems.length;
-        const countElement = document.getElementById('cart-count');
-        const floatingCart = document.querySelector('.floating-cart');
+        const countElement = document.getElementById('booking-count');
+        const viewBtn = document.getElementById('floating-cart-btn');
         
         if (count > 0) {
           countElement.textContent = count;
-          floatingCart.style.display = 'block';
+          viewBtn.style.display = 'block';
         } else {
-          floatingCart.style.display = 'none';
+          viewBtn.style.display = 'none';
         }
       };
 
@@ -1318,19 +1321,36 @@
             return;
           }
           
-          const size = selectedSize.textContent;
-          addToCart(productName, parseFloat(productPrice), size);
+          addToCart(productName, parseFloat(productPrice));
         });
+      });
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(event) {
+        const modal = document.getElementById('cartModal');
+        if (event.target === modal) {
+          closeCartModal();
+        }
       });
       
       // Close modal with Escape key
       window.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
           const modal = document.getElementById('cartModal');
-          if (modal.style.display === 'flex') {
+          if (modal.style.display === 'block') {
             closeCartModal();
           }
         }
+      });
+      
+      // Initialize cart display on page load
+      window.addEventListener('load', function() {
+        updateCartDisplay();
+      });
+      
+      // Initialize on DOM content loaded as well
+      document.addEventListener('DOMContentLoaded', function() {
+        updateCartDisplay();
       });
     </script>
   </body>
