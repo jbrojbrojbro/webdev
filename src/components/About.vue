@@ -669,10 +669,6 @@
     gap: 1rem;
   }
   
-  .promo-section {
-    padding: 1rem;
-  }
-  
   .company-overview h3 {
     font-size: 22px;
   }
