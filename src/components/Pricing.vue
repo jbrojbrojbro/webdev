@@ -22,7 +22,7 @@
             <li>Locker room access</li>
             <li>Free fitness assessment</li>
           </ul>
-          <button class="btn btn-secondary">Choose Plan</button>
+          <button class="btn btn-secondary" @click="addToCart('Basic', 29)">Choose Plan</button>
         </div>
         
         <div class="pricing-card popular">
@@ -69,6 +69,48 @@
       
       <div class="pricing-note">
         <p>All memberships include a 7-day free trial. No setup fees. Cancel anytime.</p>
+      </div>
+      
+      <!-- Floating Cart Button -->
+      <button class="floating-cart" @click="showCartModal" v-show="cartItems.length > 0">
+        View Cart <span class="cart-count">{{ cartItems.length }}</span>
+      </button>
+
+      <!-- Cart Modal -->
+      <div v-if="showCart" class="cart-modal" @click="closeCartModal">
+        <div class="cart-modal-content" @click.stop>
+          <div class="cart-header">
+            <h3 class="cart-title">Membership Cart</h3>
+            <button class="close-cart-btn" @click="closeCartModal">&times;</button>
+          </div>
+          
+          <div class="cart-items">
+            <div v-if="cartItems.length === 0" class="empty-cart">
+              Your cart is empty.
+            </div>
+            <div v-else>
+              <div v-for="item in cartItems" :key="item.id" class="cart-item">
+                <div class="cart-item-details">
+                  <h4>{{ item.name }} Plan</h4>
+                  <p>Added: {{ formatDate(item.addedAt) }}</p>
+                </div>
+                <div class="cart-item-actions">
+                  <span class="cart-item-price">${{ item.price }}/month</span>
+                  <button class="remove-item" @click="removeFromCart(item.id)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div v-if="cartItems.length > 0" class="cart-total">
+            <h3>Total: ${{ cartTotal }}/month</h3>
+          </div>
+          
+          <div class="cart-actions">
+            <button v-if="cartItems.length > 0" class="cart-btn primary" @click="checkout">Proceed to Checkout</button>
+            <button v-if="cartItems.length > 0" class="cart-btn secondary" @click="clearCart">Clear Cart</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
