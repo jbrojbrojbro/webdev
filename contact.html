@@ -591,11 +591,66 @@
       
       function subscribeNewsletter() {
         const email = document.getElementById('newsletter-email').value;
-        if (email) {
+        const emailValue = email.trim();
+        
+        if (!emailValue) {
+          showEmailErrorPopup('Please enter your email address');
+          return;
+        }
+        
+        if (!isValidEmail(emailValue)) {
+          showEmailErrorPopup('Please enter a valid email address');
+          return;
+        }
+        
+        if (emailValue) {
           alert('Thank you for subscribing!');
           document.getElementById('newsletter-email').value = '';
-        } else {
-          alert('Please enter a valid email address.');
+        }
+      }
+      
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+      
+      function showEmailErrorPopup(message) {
+        // Remove existing popup if any
+        const existingPopup = document.querySelector('.email-error-popup');
+        if (existingPopup) {
+          existingPopup.remove();
+        }
+        
+        // Create popup
+        const popup = document.createElement('div');
+        popup.className = 'email-error-popup';
+        popup.innerHTML = `
+          <div class="error-content">
+            <span class="error-icon">⚠️</span>
+            <span class="error-message">${message}</span>
+            <button class="error-close" onclick="hideEmailError(this)">&times;</button>
+          </div>
+        `;
+        
+        document.body.appendChild(popup);
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+          if (popup.parentNode) {
+            popup.remove();
+          }
+        }, 3000);
+        
+        // Click to hide
+        popup.addEventListener('click', () => {
+          popup.remove();
+        });
+      }
+      
+      function hideEmailError(button) {
+        const popup = button.closest('.email-error-popup');
+        if (popup) {
+          popup.remove();
         }
       }
       
@@ -619,11 +674,23 @@
         const phone = document.getElementById('phone').value;
         const message = document.getElementById('message').value;
         
+        // Validate email
+        const emailValue = email.trim();
+        if (!emailValue) {
+          showEmailErrorPopup('Please enter your email address');
+          return;
+        }
+        
+        if (!isValidEmail(emailValue)) {
+          showEmailErrorPopup('Please enter a valid email address');
+          return;
+        }
+        
         // Create contact data object
         const contactData = {
           id: Date.now() + Math.random(), // Unique ID
           name: name,
-          email: email,
+          email: emailValue,
           phone: phone,
           message: message,
           submittedAt: new Date().toISOString()

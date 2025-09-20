@@ -2,12 +2,45 @@
 import { ref } from 'vue'
 
 const email = ref('')
+const showEmailError = ref(false)
+const emailErrorMessage = ref('')
 
 const subscribeNewsletter = () => {
-  if (email.value) {
+  const emailValue = email.value.trim()
+  
+  if (!emailValue) {
+    showEmailErrorPopup('Please enter your email address')
+    return
+  }
+  
+  if (!isValidEmail(emailValue)) {
+    showEmailErrorPopup('Please enter a valid email address')
+    return
+  }
+  
+  if (emailValue) {
     alert('Thank you for subscribing!')
     email.value = ''
   }
+}
+
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+const showEmailErrorPopup = (message) => {
+  emailErrorMessage.value = message
+  showEmailError.value = true
+  
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    showEmailError.value = false
+  }, 3000)
+}
+
+const hideEmailError = () => {
+  showEmailError.value = false
 }
 </script>
 
@@ -35,6 +68,15 @@ const subscribeNewsletter = () => {
               >
                 Subscribe
               </button>
+            </div>
+            
+            <!-- Email Error Popup -->
+            <div v-if="showEmailError" class="email-error-popup" @click="hideEmailError">
+              <div class="error-content">
+                <span class="error-icon">⚠️</span>
+                <span class="error-message">{{ emailErrorMessage }}</span>
+                <button class="error-close" @click="hideEmailError">&times;</button>
+              </div>
             </div>
           </div>
           
@@ -206,6 +248,76 @@ const subscribeNewsletter = () => {
   outline: 2px solid #155EBC;
   outline-offset: 2px;
   transform: scale(1.2);
+}
+
+.email-error-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #dc3545;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+  z-index: 2000;
+  animation: slideInRight 0.3s ease;
+  cursor: pointer;
+  max-width: 350px;
+}
+
+.error-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.error-message {
+  font-family: 'Calibri', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  flex: 1;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.error-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.error-close:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .footer-section ul {
