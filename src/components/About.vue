@@ -115,7 +115,6 @@
           <img src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop" alt="Modern gym interior" />
         </div>
       </div>
-      </div>
       
       <div class="stats">
         <div class="stat">
