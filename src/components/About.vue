@@ -17,6 +17,49 @@
       
       <div class="about-content">
         <div class="about-text">
+          <div class="company-overview">
+            <h3>Our Story</h3>
+            <p>Founded in 2020, ABC Fitness Studio was born from a simple yet powerful vision: to create a fitness community where everyone feels welcome, supported, and empowered to achieve their health goals. What started as a small neighborhood gym has grown into a thriving fitness hub that serves over 500 members from all walks of life.</p>
+          </div>
+          
+          <div class="mission-vision">
+            <div class="mission">
+              <h3>Our Mission</h3>
+              <p>To provide accessible, high-quality fitness services that inspire and support individuals on their journey to better health, while fostering a inclusive community that celebrates every achievement, no matter how small.</p>
+            </div>
+            
+            <div class="vision">
+              <h3>Our Vision</h3>
+              <p>To be the leading fitness destination that transforms lives through personalized training, innovative programs, and unwavering support, making fitness a sustainable and enjoyable part of our members' daily lives.</p>
+            </div>
+          </div>
+          
+          <div class="core-values">
+            <h3>Our Core Values</h3>
+            <div class="values-grid">
+              <div class="value-item">
+                <div class="value-icon">🤝</div>
+                <h4>Inclusivity</h4>
+                <p>We welcome everyone, regardless of fitness level, age, or background.</p>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">💪</div>
+                <h4>Excellence</h4>
+                <p>We strive for the highest standards in everything we do.</p>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">🎯</div>
+                <h4>Results</h4>
+                <p>We're committed to helping you achieve measurable progress.</p>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">❤️</div>
+                <h4>Community</h4>
+                <p>We believe fitness is better when shared with others.</p>
+              </div>
+            </div>
+          </div>
+          
           <div class="about-item">
             <div class="about-icon">🏋️</div>
             <div>
@@ -50,6 +93,26 @@
           </div>
           
           <div class="equipment-section">
+            <h3>Our Commitment to You</h3>
+            <div class="commitment-list">
+              <div class="commitment-item">
+                <span class="commitment-number">2020</span>
+                <span class="commitment-text">Year Founded - 5 years of serving our community</span>
+              </div>
+              <div class="commitment-item">
+                <span class="commitment-number">500+</span>
+                <span class="commitment-text">Lives transformed through our programs</span>
+              </div>
+              <div class="commitment-item">
+                <span class="commitment-number">24/7</span>
+                <span class="commitment-text">Access available for premium members</span>
+              </div>
+              <div class="commitment-item">
+                <span class="commitment-number">100%</span>
+                <span class="commitment-text">Satisfaction guarantee on all services</span>
+              </div>
+            </div>
+            
             <div class="equipment-accent">
               <h3>State-of-the-Art Equipment</h3>
               <p>Our facility features the latest fitness technology and equipment to help you achieve your goals efficiently and safely.</p>
@@ -286,6 +349,151 @@
   letter-spacing: 0.02em;
 }
 
+.company-overview {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.company-overview h3 {
+  font-family: 'Arial', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #155EBC;
+  margin-bottom: 1rem;
+}
+
+.company-overview p {
+  font-family: 'Calibri', sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #00231C;
+  opacity: 0.8;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+.mission-vision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.mission, .vision {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 4px solid #155EBC;
+}
+
+.mission h3, .vision h3 {
+  font-family: 'Arial', sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #00231C;
+  margin-bottom: 1rem;
+}
+
+.mission p, .vision p {
+  font-family: 'Calibri', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  color: #00231C;
+  opacity: 0.8;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.core-values {
+  margin-bottom: 3rem;
+}
+
+.core-values h3 {
+  font-family: 'Arial', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  color: #00231C;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.value-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.value-item:hover {
+  transform: translateY(-5px);
+}
+
+.value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.value-item h4 {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #155EBC;
+  margin-bottom: 0.5rem;
+}
+
+.value-item p {
+  font-family: 'Calibri', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #00231C;
+  opacity: 0.7;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.commitment-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.commitment-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.commitment-number {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #155EBC;
+  min-width: 60px;
+}
+
+.commitment-text {
+  font-family: 'Calibri', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #00231C;
+  opacity: 0.8;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
 .about-image {
   position: relative;
 }
@@ -327,6 +535,21 @@
   .about-content {
     grid-template-columns: 1fr;
     gap: 2.5rem;
+  }
+  
+  .mission-vision {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .commitment-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .facilities-grid {
@@ -386,6 +609,43 @@
     margin: 1.5rem auto;
   }
   
+  .company-overview h3 {
+    font-size: 24px;
+  }
+  
+  .company-overview p {
+    font-size: 16px;
+  }
+  
+  .mission h3, .vision h3 {
+    font-size: 20px;
+  }
+  
+  .mission p, .vision p {
+    font-size: 15px;
+  }
+  
+  .core-values h3 {
+    font-size: 22px;
+  }
+  
+  .value-item h4 {
+    font-size: 16px;
+  }
+  
+  .value-item p {
+    font-size: 13px;
+  }
+  
+  .commitment-number {
+    font-size: 20px;
+    min-width: 50px;
+  }
+  
+  .commitment-text {
+    font-size: 13px;
+  }
+  
   .hours-table th,
   .hours-table td {
     padding: 0.5rem;
@@ -411,6 +671,51 @@
   
   .promo-section {
     padding: 1rem;
+  }
+  
+  .company-overview h3 {
+    font-size: 22px;
+  }
+  
+  .company-overview p {
+    font-size: 15px;
+  }
+  
+  .mission h3, .vision h3 {
+    font-size: 18px;
+  }
+  
+  .mission p, .vision p {
+    font-size: 14px;
+  }
+  
+  .core-values h3 {
+    font-size: 20px;
+  }
+  
+  .value-item {
+    padding: 1rem;
+  }
+  
+  .value-item h4 {
+    font-size: 15px;
+  }
+  
+  .value-item p {
+    font-size: 12px;
+  }
+  
+  .commitment-item {
+    padding: 1rem;
+  }
+  
+  .commitment-number {
+    font-size: 18px;
+    min-width: 45px;
+  }
+  
+  .commitment-text {
+    font-size: 12px;
   }
 }
 </style>
