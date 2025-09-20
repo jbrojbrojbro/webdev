@@ -284,6 +284,26 @@
 }
 
 @media (max-width: 480px) {
+  .cart-modal-content {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .cart-title {
+    font-size: 18px;
+  }
+  
+  .cart-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 13px;
+    width: 100%;
+  }
+  
+  .cart-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
   .pricing-card {
     padding: 1.5rem;
   }
