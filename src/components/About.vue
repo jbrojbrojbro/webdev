@@ -6,15 +6,6 @@
         Your premier destination for fitness, wellness, and personal transformation
       </p>
       
-      <div class="promo-section">
-        <h3 style="font-family: 'Arial', sans-serif; font-size: 25px; font-weight: bold; color: white; margin-bottom: 1rem;">Featured Classes</h3>
-        <p style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: normal; color: white; opacity: 0.9; margin-bottom: 1.5rem;">Join our most popular fitness classes designed for all levels</p>
-        <div class="class-images">
-          <img src="https://i.postimg.cc/vg9KCP9g/spin-bike.jpg" alt="Spin Cycle Bike" class="class-image" />
-          <img src="https://i.postimg.cc/18k2MhVh/heavy-bag.jpg" alt="Heavy Bag" class="class-image" />
-        </div>
-      </div>
-      
       <div class="about-content">
         <div class="about-text">
           <div class="company-overview">
