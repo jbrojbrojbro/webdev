@@ -327,40 +327,28 @@
 
       /* Cart Modal Styles */
       .cart-modal {
-        display: none;
         position: fixed;
         z-index: 2000;
         top: 0;
-       right: 0;
-       width: 100%;
+        left: 0;
+        width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-       pointer-events: none;
-     }
-
-     .cart-modal.show {
-       display: block;
-       pointer-events: all;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
       }
 
       .cart-modal-content {
         background-color: white;
-       position: fixed;
-       top: 0;
-       right: -400px;
-       width: 400px;
-       height: 100vh;
-       padding: 1.5rem;
+        padding: 2rem;
         border-radius: 15px;
-       border-top-right-radius: 0;
-       border-bottom-right-radius: 0;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
         overflow-y: auto;
-       box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-       transition: right 0.3s ease;
-     }
-
-     .cart-modal.show .cart-modal-content {
-       right: 0;
+        position: relative;
       }
 
       .cart-header {
@@ -546,12 +534,6 @@
       }
 
       @media (max-width: 768px) {
-        .cart-modal-content {
-          width: 320px;
-          right: -320px;
-          padding: 1rem;
-        }
-        
         .floating-cart {
           bottom: 1rem;
           right: 1rem;
@@ -566,7 +548,13 @@
         }
         
         .cart-modal {
-          padding: 0;
+          padding: 1rem;
+        }
+        
+        .cart-modal-content {
+          padding: 1.5rem;
+          width: 95%;
+          max-height: 90vh;
         }
         
         .cart-title {
@@ -593,14 +581,13 @@
       }
 
       @media (max-width: 480px) {
-        .cart-modal-content {
-          width: 280px;
-          right: -280px;
-          padding: 0.75rem;
-        }
-        
         .cart-title {
           font-size: 18px;
+        }
+        
+        .cart-modal-content {
+          padding: 1rem;
+          margin: 0.5rem;
         }
         
         .cart-btn {
@@ -1168,13 +1155,7 @@
         const modal = document.getElementById('cartModal');
         const cartItems = document.getElementById('cartItems');
         
-        // Show modal first
-        modal.style.display = 'block';
-        
-        // Trigger slide animation
-        setTimeout(() => {
-          modal.classList.add('show');
-        }, 10);
+        modal.style.display = 'flex';
         
         // Clear existing content
         cartItems.innerHTML = '';
@@ -1209,14 +1190,7 @@
       
       function closeCartModal() {
         const modal = document.getElementById('cartModal');
-        
-        // Trigger slide out animation
-        modal.classList.remove('show');
-        
-        // Hide modal after animation completes
-        setTimeout(() => {
-          modal.style.display = 'none';
-        }, 300);
+        modal.style.display = 'none';
         
         // Return focus to the cart button
         document.querySelector('.floating-cart').focus();
@@ -1267,8 +1241,7 @@
       // Close modal when clicking outside
       window.addEventListener('click', function(event) {
         const modal = document.getElementById('cartModal');
-        const modalContent = modal.querySelector('.cart-modal-content');
-        if (event.target === modal && !modalContent.contains(event.target)) {
+        if (event.target === modal) {
           closeCartModal();
         }
       });
@@ -1277,7 +1250,7 @@
       window.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
           const modal = document.getElementById('cartModal');
-          if (modal.classList.contains('show')) {
+          if (modal.style.display === 'flex') {
             closeCartModal();
           }
         }
