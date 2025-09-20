@@ -275,6 +275,67 @@
         box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
       }
 
+      @media (max-width: 768px) {
+        .floating-cart {
+          bottom: 1rem;
+          right: 1rem;
+          padding: 0.75rem 1rem;
+          font-size: 12px;
+        }
+        
+        .cart-count {
+          width: 18px;
+          height: 18px;
+          font-size: 10px;
+        }
+        
+        .cart-modal {
+          padding: 1rem;
+        }
+        
+        .cart-modal-content {
+          padding: 1.5rem;
+          width: 95%;
+          max-height: 90vh;
+        }
+        
+        .cart-title {
+          font-size: 20px;
+        }
+        
+        .cart-btn {
+          padding: 0.75rem 1.5rem;
+          font-size: 14px;
+        }
+        
+        .cart-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cart-modal-content {
+          padding: 1rem;
+          margin: 0.5rem;
+        }
+        
+        .cart-title {
+          font-size: 18px;
+        }
+        
+        .cart-btn {
+          padding: 0.75rem 1.25rem;
+          font-size: 13px;
+          width: 100%;
+        }
+        
+        .cart-actions {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+      }
       .featured-badge {
         position: absolute;
         top: 15px;
@@ -533,74 +594,6 @@
         letter-spacing: 0.02em;
       }
 
-      @media (max-width: 768px) {
-        .floating-cart {
-          bottom: 1rem;
-          right: 1rem;
-          padding: 0.75rem 1rem;
-          font-size: 12px;
-        }
-        
-        .cart-count {
-          width: 18px;
-          height: 18px;
-          font-size: 10px;
-        }
-        
-        .cart-modal {
-          padding: 1rem;
-        }
-        
-        .cart-modal-content {
-          padding: 1.5rem;
-          width: 95%;
-          max-height: 90vh;
-        }
-        
-        .cart-title {
-          font-size: 20px;
-        }
-        
-        .cart-btn {
-          padding: 0.75rem 1.5rem;
-          font-size: 14px;
-        }
-        
-        .cart-item {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
-        }
-        
-        .cart-item-actions {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .cart-title {
-          font-size: 18px;
-        }
-        
-        .cart-modal-content {
-          padding: 1rem;
-          margin: 0.5rem;
-        }
-        
-        .cart-btn {
-          padding: 0.75rem 1.25rem;
-          font-size: 13px;
-          width: 100%;
-        }
-        
-        .cart-actions {
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-      }
         background: linear-gradient(135deg, #634E99, #155EBC);
         color: white;
         font-family: 'Arial', sans-serif;
@@ -978,7 +971,7 @@
     </button>
 
     <!-- Cart Modal -->
-    <div id="cartModal" class="cart-modal">
+    <div id="cartModal" class="cart-modal" style="display: none;">
       <div class="cart-modal-content">
         <div class="cart-header">
           <h3 class="cart-title">Shopping Cart</h3>
@@ -989,13 +982,15 @@
           <!-- Cart items will be populated here -->
         </div>
         
-        <div class="cart-total">
-          <h3>Total: $<span id="cart-total">0.00</span></h3>
+        <div id="cartTotal" class="cart-total" style="display: none;">
+          <h3>Total: $<span id="cart-total-amount">0.00</span></h3>
         </div>
         
-        <div class="cart-actions">
+        <div class="cart-total">
+          <div class="cart-actions">
           <button class="cart-btn primary" onclick="checkout()">Checkout</button>
           <button class="cart-btn secondary" onclick="clearCart()">Clear Cart</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1154,15 +1149,18 @@
       function showCartModal() {
         const modal = document.getElementById('cartModal');
         const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
         
-        modal.style.display = 'flex';
+        modal.style.display = 'block';
         
         // Clear existing content
         cartItems.innerHTML = '';
         
         if (cart.length === 0) {
           cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+          cartTotal.style.display = 'none';
         } else {
+          cartTotal.style.display = 'block';
           cart.forEach(item => {
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
@@ -1172,7 +1170,7 @@
                 <p>Size: ${item.size}</p>
                 <p>Added: ${new Date(item.addedAt).toLocaleDateString()}</p>
               </div>
-              <div class="cart-item-actions">
+              <div style="display: flex; align-items: center; gap: 1rem;">
                 <span class="cart-item-price">$${item.price.toFixed(2)}</span>
                 <button class="remove-item" onclick="removeFromCart('${item.id}')">Remove</button>
               </div>
@@ -1182,18 +1180,11 @@
         }
         
         updateCartTotal();
-        
-        // Focus management for accessibility
-        const closeBtn = modal.querySelector('.close-cart-btn');
-        closeBtn.focus();
       }
       
       function closeCartModal() {
         const modal = document.getElementById('cartModal');
         modal.style.display = 'none';
-        
-        // Return focus to the cart button
-        document.querySelector('.floating-cart').focus();
       }
       
       function removeFromCart(itemId) {
@@ -1217,7 +1208,10 @@
       
       function updateCartTotal() {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        document.getElementById('cart-total').textContent = total.toFixed(2);
+        const totalElement = document.getElementById('cart-total-amount');
+        if (totalElement) {
+          totalElement.textContent = total.toFixed(2);
+        }
       }
       
       function checkout() {
@@ -1241,18 +1235,15 @@
       // Close modal when clicking outside
       window.addEventListener('click', function(event) {
         const modal = document.getElementById('cartModal');
-        if (event.target === modal) {
+        if (event.target === modal && modal.style.display === 'block') {
           closeCartModal();
         }
       });
       
       // Close modal with Escape key
       window.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-          const modal = document.getElementById('cartModal');
-          if (modal.style.display === 'flex') {
-            closeCartModal();
-          }
+        if (event.key === 'Escape' && document.getElementById('cartModal').style.display === 'block') {
+          closeCartModal();
         }
       });
       
