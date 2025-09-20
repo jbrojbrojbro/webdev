@@ -59,7 +59,6 @@ onUnmounted(() => {
           <li><a href="/contact.html" @click.prevent="navigateToPage('/contact.html')">Contact</a></li>
         </ul>
         
-        <button class="mobile-toggle" @click="toggleMobileMenu">
         <button :class="['mobile-toggle', { 'active': isMobileMenuOpen }]" @click="toggleMobileMenu">
           <span></span>
           <span></span>
