@@ -1105,7 +1105,7 @@
         const existingItem = cartItems.find(item => item.name === planName);
         
         if (existingItem) {
-          alert('This plan is already in your cart!');
+          alert('This item is already in your cart!');
           return;
         }
         
@@ -1113,11 +1113,11 @@
           id: Date.now() + Math.random(),
           name: planName,
           price: price,
-          addedAt: new Date().toISOString()
+          alert(`Thank you for your purchase! You've selected: ${itemNames}. Total: $${total}. We'll process your order and contact you with shipping details.`);
         };
         
         cartItems.push(item);
-        alert(`${planName} plan added to cart!`);
+        alert(`${planName} added to cart!`);
         updateCartDisplay();
       };
 
@@ -1159,11 +1159,11 @@
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
               <div class="cart-item-details">
-                <h4>${item.name} Plan</h4>
+                <h4>${item.name}</h4>
                 <p>Added: ${new Date(item.addedAt).toLocaleDateString()}</p>
               </div>
               <div class="cart-item-actions">
-                <span class="cart-item-price">$${item.price}/month</span>
+                <span class="cart-item-price">$${item.price}</span>
                 <button class="remove-item" onclick="removeFromCart('${item.id}')">Remove</button>
               </div>
             `;
@@ -1326,7 +1326,7 @@
           }
           
           addToCart(productName, parseFloat(productPrice));
-        });
+          const itemNames = cartItems.map(item => item.name).join(', ');
       });
       
       // Close modal when clicking outside
