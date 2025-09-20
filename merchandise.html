@@ -330,24 +330,37 @@
         display: none;
         position: fixed;
         z-index: 2000;
-        left: 0;
         top: 0;
-        width: 100%;
+       right: 0;
+       width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        padding: 2rem;
+       pointer-events: none;
+     }
+
+     .cart-modal.show {
+       display: block;
+       pointer-events: all;
       }
 
       .cart-modal-content {
         background-color: white;
-        margin: 5% auto;
-        padding: 2rem;
+       position: fixed;
+       top: 0;
+       right: -400px;
+       width: 400px;
+       height: 100vh;
+       padding: 1.5rem;
         border-radius: 15px;
-        width: 90%;
-        max-width: 600px;
-        max-height: 80vh;
+       border-top-right-radius: 0;
+       border-bottom-right-radius: 0;
         overflow-y: auto;
-        position: relative;
+       box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+       transition: right 0.3s ease;
+     }
+
+     .cart-modal.show .cart-modal-content {
+       right: 0;
       }
 
       .cart-header {
@@ -533,6 +546,12 @@
       }
 
       @media (max-width: 768px) {
+        .cart-modal-content {
+          width: 320px;
+          right: -320px;
+          padding: 1rem;
+        }
+        
         .floating-cart {
           bottom: 1rem;
           right: 1rem;
@@ -547,14 +566,7 @@
         }
         
         .cart-modal {
-          padding: 1rem;
-        }
-        
-        .cart-modal-content {
-          padding: 1.5rem;
-          margin: 1rem;
-          width: 95%;
-          max-height: 90vh;
+          padding: 0;
         }
         
         .cart-title {
@@ -582,8 +594,9 @@
 
       @media (max-width: 480px) {
         .cart-modal-content {
-          padding: 1rem;
-          margin: 0.5rem;
+          width: 280px;
+          right: -280px;
+          padding: 0.75rem;
         }
         
         .cart-title {
@@ -1143,6 +1156,14 @@
         const modal = document.getElementById('cartModal');
         const cartItems = document.getElementById('cartItems');
         
+        // Show modal first
+        modal.style.display = 'block';
+        
+        // Trigger slide animation
+        setTimeout(() => {
+          modal.classList.add('show');
+        }, 10);
+        
         // Clear existing content
         cartItems.innerHTML = '';
         
@@ -1168,7 +1189,6 @@
         }
         
         updateCartTotal();
-        modal.style.display = 'block';
         
         // Focus management for accessibility
         const closeBtn = modal.querySelector('.close-cart-btn');
@@ -1177,7 +1197,14 @@
       
       function closeCartModal() {
         const modal = document.getElementById('cartModal');
-        modal.style.display = 'none';
+        
+        // Trigger slide out animation
+        modal.classList.remove('show');
+        
+        // Hide modal after animation completes
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 300);
         
         // Return focus to the cart button
         document.querySelector('.floating-cart').focus();
@@ -1228,7 +1255,8 @@
       // Close modal when clicking outside
       window.addEventListener('click', function(event) {
         const modal = document.getElementById('cartModal');
-        if (event.target === modal) {
+        const modalContent = modal.querySelector('.cart-modal-content');
+        if (event.target === modal && !modalContent.contains(event.target)) {
           closeCartModal();
         }
       });
@@ -1237,7 +1265,7 @@
       window.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
           const modal = document.getElementById('cartModal');
-          if (modal.style.display === 'block') {
+          if (modal.classList.contains('show')) {
             closeCartModal();
           }
         }
