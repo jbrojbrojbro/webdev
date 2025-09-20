@@ -1113,7 +1113,7 @@
           id: Date.now() + Math.random(),
           name: planName,
           price: price,
-          alert(`Thank you for your purchase! You've selected: ${itemNames}. Total: $${total}. We'll process your order and contact you with shipping details.`);
+          addedAt: new Date().toISOString()
         };
         
         cartItems.push(item);
