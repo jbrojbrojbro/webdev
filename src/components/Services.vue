@@ -229,6 +229,7 @@
   
   .service-card {
     padding: 1.5rem;
+    text-align: center;
   }
   
   .service-card h3 {
@@ -250,6 +251,25 @@
   .filter-btn {
     font-size: 14px;
     padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card {
+    padding: 1rem;
+  }
+  
+  .service-icon {
+    font-size: 2.5rem;
+  }
+  
+  .service-card h3 {
+    font-size: 18px;
+  }
+  
+  .service-card p,
+  .service-card li {
+    font-size: 14px;
   }
 }
 </style>

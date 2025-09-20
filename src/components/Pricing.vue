@@ -211,14 +211,17 @@
   .pricing-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 0 1rem;
   }
   
   .pricing-card.popular {
     transform: none;
+    margin: 0;
   }
   
   .pricing-card {
     padding: 2rem;
+    margin: 0;
   }
   
   .pricing-header h3 {
@@ -235,6 +238,29 @@
   
   .pricing-note {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-card {
+    padding: 1.5rem;
+  }
+  
+  .pricing-header h3 {
+    font-size: 18px;
+  }
+  
+  .amount {
+    font-size: 24px;
+  }
+  
+  .features li {
+    font-size: 14px;
+  }
+  
+  .popular-badge {
+    font-size: 10px;
+    padding: 0.4rem 1rem;
   }
 }
 </style>

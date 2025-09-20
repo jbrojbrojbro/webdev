@@ -149,4 +149,31 @@ body {
     font-size: 14px;
   }
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding: 30px 0;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .section-subtitle {
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+  
+  .container {
+    padding: 0 12px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    width: 100%;
+    max-width: 250px;
+  }
+}
 </style>

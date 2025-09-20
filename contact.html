@@ -303,6 +303,7 @@
         
         .contact-form {
           padding: 1.5rem;
+          margin: 0 1rem;
         }
         
         .form-buttons {
@@ -331,6 +332,51 @@
           padding: 0.875rem 1.5rem;
           width: 100%;
           max-width: 200px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 100px 0 40px;
+        }
+        
+        .container {
+          padding: 0 12px;
+        }
+        
+        .contact-item {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
+        
+        .contact-icon {
+          align-self: center;
+        }
+        
+        .contact-form {
+          padding: 1rem;
+          margin: 0;
+        }
+        
+        .contact-item h3 {
+          font-size: 18px;
+        }
+        
+        .contact-item p {
+          font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+          font-size: 14px;
+          padding: 0.75rem;
+        }
+        
+        .btn-submit,
+        .btn-clear {
+          font-size: 14px;
+          padding: 0.75rem 1.25rem;
         }
       }
     </style>

@@ -10,6 +10,12 @@ const handleScroll = () => {
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+  // Prevent body scroll when menu is open
+  if (isMobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 }
 
 const scrollToSection = (sectionId) => {
@@ -54,6 +60,7 @@ onUnmounted(() => {
         </ul>
         
         <button class="mobile-toggle" @click="toggleMobileMenu">
+        <button :class="['mobile-toggle', { 'active': isMobileMenuOpen }]" @click="toggleMobileMenu">
           <span></span>
           <span></span>
           <span></span>
@@ -159,6 +166,7 @@ onUnmounted(() => {
   border: none;
   cursor: pointer;
   padding: 5px;
+  z-index: 1001;
 }
 
 .mobile-toggle span {
@@ -167,6 +175,18 @@ onUnmounted(() => {
   background: #00231C;
   margin: 3px 0;
   transition: 0.3s;
+}
+
+.mobile-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 .mobile-toggle:focus {
@@ -197,6 +217,9 @@ onUnmounted(() => {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    z-index: 1000;
+    max-height: calc(100vh - 65px);
+    overflow-y: auto;
   }
   
   .nav-links.mobile-open {
@@ -212,6 +235,12 @@ onUnmounted(() => {
   .nav-links a {
     font-size: 16px;
     padding: 0.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 35, 28, 0.1);
+  }
+  
+  .nav-links a:last-child {
+    border-bottom: none;
   }
 }
 </style>

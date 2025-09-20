@@ -1,1 +1,126 @@
-/* Reset and base styles are now handled in App.vue */
+/* Mobile-first responsive utilities */
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Touch-friendly interactive elements */
+@media (max-width: 768px) {
+  button, .btn, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  input, textarea, select {
+    min-height: 44px;
+  }
+}
+
+/* Improved text readability on mobile */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+    word-wrap: break-word;
+  }
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+  
+  .mobile-menu-overlay.active {
+    display: block;
+  }
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile-friendly spacing */
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1.5rem 0;
+  }
+  
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
+/* Mobile form improvements */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 8px;
+  }
+}
+
+/* Mobile table responsiveness */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  table {
+    min-width: 600px;
+  }
+}
+
+/* Mobile modal improvements */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+}
+
+/* Accessibility improvements for mobile */
+@media (max-width: 768px) {
+  :focus {
+    outline: 3px solid #155EBC;
+    outline-offset: 2px;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

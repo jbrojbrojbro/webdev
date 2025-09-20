@@ -111,22 +111,24 @@ const navigateToPage = (url) => {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 100vh;
+    min-height: calc(100vh - 65px);
+    margin-top: 65px;
     padding: 0 1rem;
   }
   
   .hero-content {
-    padding: 2rem 0;
+    padding: 1rem 0;
+    text-align: center;
   }
   
   .hero-title {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1.4;
     margin-bottom: 1rem;
   }
   
   .hero-subtitle {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5;
     margin-bottom: 2rem;
   }
@@ -139,7 +141,23 @@ const navigateToPage = (url) => {
   
   .hero-buttons .btn {
     width: 100%;
-    max-width: 280px;
+    max-width: 300px;
+    padding: 16px 24px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 24px;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+  }
+  
+  .hero-buttons .btn {
+    max-width: 250px;
   }
 }
 </style>

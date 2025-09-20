@@ -339,6 +339,11 @@
   
   .class-images {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .class-image {
+    height: 250px;
   }
   
   .about-image {
@@ -352,6 +357,7 @@
   .stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    margin-top: 2rem;
   }
   
   .stat h3 {
@@ -378,6 +384,33 @@
   .business-hours {
     padding: 1.5rem;
     margin: 1.5rem auto;
+  }
+  
+  .hours-table th,
+  .hours-table td {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .about-icon {
+    align-self: center;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .promo-section {
+    padding: 1rem;
   }
 }
 </style>

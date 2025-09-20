@@ -320,6 +320,8 @@
         
         .merchandise-grid {
           grid-template-columns: 1fr;
+          gap: 1.5rem;
+          padding: 0 1rem;
         }
         
         .product-info {
@@ -350,6 +352,59 @@
         .add-to-cart-btn {
           font-size: 15px;
           padding: 0.875rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 100px 0 40px;
+        }
+        
+        .container {
+          padding: 0 12px;
+        }
+        
+        .merchandise-grid {
+          padding: 0;
+        }
+        
+        .product-card {
+          margin: 0 0.5rem;
+        }
+        
+        .product-info {
+          padding: 1rem;
+        }
+        
+        .product-name {
+          font-size: 18px;
+        }
+        
+        .product-description {
+          font-size: 14px;
+        }
+        
+        .product-price {
+          font-size: 22px;
+        }
+        
+        .sizes-label {
+          font-size: 14px;
+        }
+        
+        .size-btn {
+          font-size: 12px;
+          padding: 0.3rem 0.6rem;
+        }
+        
+        .add-to-cart-btn {
+          font-size: 14px;
+          padding: 0.75rem;
+        }
+        
+        .featured-badge {
+          font-size: 10px;
+          padding: 0.4rem 0.8rem;
         }
       }
     </style>

@@ -304,6 +304,7 @@ const subscribeNewsletter = () => {
   .footer-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+    text-align: center;
   }
   
   .footer-bottom {
@@ -318,6 +319,7 @@ const subscribeNewsletter = () => {
   
   .newsletter-form {
     flex-direction: column;
+    gap: 1rem;
   }
   
   .footer-section h3 {
@@ -346,6 +348,37 @@ const subscribeNewsletter = () => {
   
   .footer-links a {
     font-size: 15px;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .newsletter-input {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-section h3,
+  .footer-section h4 {
+    font-size: 18px;
+  }
+  
+  .footer-section p {
+    font-size: 14px;
+  }
+  
+  .newsletter-btn {
+    width: 100%;
   }
 }
 </style>

@@ -170,6 +170,7 @@
   
   .trainer-info {
     padding: 1.5rem;
+    text-align: center;
   }
   
   .trainer-info h3 {
@@ -187,6 +188,32 @@
   .trainer-certifications span {
     font-size: 10px;
     padding: 0.25rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .trainer-card {
+    margin: 0 1rem;
+  }
+  
+  .trainer-image img {
+    height: 250px;
+  }
+  
+  .trainer-info {
+    padding: 1rem;
+  }
+  
+  .trainer-info h3 {
+    font-size: 18px;
+  }
+  
+  .trainer-title {
+    font-size: 13px;
+  }
+  
+  .trainer-bio {
+    font-size: 14px;
   }
 }
 </style>
