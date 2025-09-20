@@ -343,6 +343,9 @@
 .company-overview {
   margin-bottom: 3rem;
   text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .company-overview h3 {
