@@ -899,37 +899,35 @@
           let hasMatchingClass = false;
           
           cells.forEach(cell => {
-            const cellText = cell.textContent.trim();
+            const cellHTML = cell.innerHTML.trim();
             const hasBookButton = cell.querySelector('.book-btn');
             
-            if (hasBookButton && cellText !== '-') {
-              const className = cellText.split('\n')[0].trim();
+            if (hasBookButton && cellHTML !== '-') {
+              // Extract class name from the HTML content before the <br> tag
+              const className = cellHTML.split('<br>')[0].trim();
               
               if (category === 'all') {
                 cell.style.opacity = '1';
                 cell.style.pointerEvents = 'auto';
-                hasMatchingClass = true;
               } else {
                 const categoryClasses = classCategories[category] || [];
                 if (categoryClasses.includes(className)) {
                   cell.style.opacity = '1';
                   cell.style.pointerEvents = 'auto';
-                  hasMatchingClass = true;
                 } else {
                   cell.style.opacity = '0.3';
                   cell.style.pointerEvents = 'none';
                 }
               }
-            } else if (cellText === '-') {
+            } else if (cellHTML === '-') {
               // Empty cells
               cell.style.opacity = category === 'all' ? '1' : '0.3';
+            } else {
+              // Handle cells without book buttons
+              cell.style.opacity = category === 'all' ? '1' : '0.3';
+              cell.style.pointerEvents = category === 'all' ? 'auto' : 'none';
             }
           });
-          
-          // Show/hide entire row based on whether it has matching classes
-          if (category === 'all') {
-            row.style.display = '';
-          }
         });
       }
       
