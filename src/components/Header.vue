@@ -101,10 +101,11 @@ onUnmounted(() => {
 }
 
 .logo-image {
-  height: 60px;
+  height: 80px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
+  margin-right: auto;
 }
 
 .logo-image:hover {
@@ -203,7 +204,7 @@ onUnmounted(() => {
   }
   
   .logo-image {
-    height: 45px;
+    height: 60px;
   }
   
   .nav-links {
