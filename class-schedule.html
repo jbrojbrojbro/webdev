@@ -1007,7 +1007,9 @@
         };
         
         classBookings.push(booking);
-        alert(`Class booked successfully! ${classType} on ${day} at ${time}`);
+        // Store in sessionStorage as well
+        sessionStorage.setItem('classBookings', JSON.stringify(classBookings));
+        alert('Class booked successfully!');
         
         // Clear form
         document.getElementById('member-name').value = '';
