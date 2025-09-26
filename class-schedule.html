@@ -937,14 +937,6 @@
           <a href="/merchandise.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Merchandise</a>
           <a href="/class-schedule.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Schedule</a>
           <a href="/contact.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Contact</a>
-        </div>
-        
-        <div style="text-align: center;">
-          <p style="font-family: 'Comfortaa', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; margin: 0;">&copy; 2025 ABC Fitness Studio. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
     <script>
       // Class booking functionality
       const classBookings = [];
@@ -1089,6 +1081,9 @@
         alert(`Thank you! Your class bookings have been confirmed:\n\n${bookingList}\n\nWe'll send confirmation emails shortly.`);
       };
 
+      // Store original content on page load
+      let originalScheduleContent = {};
+      
       // Filter functionality
       function filterClasses(type) {
         // Update active filter button
@@ -1113,24 +1108,21 @@
         tableCells.forEach((cell, index) => {
           // Always show time column (every 8th cell starting from 0)
           if (index % 8 === 0) {
-            cell.style.display = '';
+            cell.innerHTML = originalScheduleContent[index];
             return;
           }
           
           // Show all if 'all' is selected
           if (type === 'all') {
-            cell.style.display = '';
+            cell.innerHTML = originalScheduleContent[index];
             return;
           }
           
-          // Check if cell has the matching class
+          // Check if cell has the matching class or is empty
           if (cell.classList.contains(type)) {
-            cell.style.display = '';
-          } else if (cell.textContent.trim() === '-') {
-            // Always show empty cells
-            cell.style.display = '';
+            cell.innerHTML = originalScheduleContent[index];
           } else {
-            cell.style.display = 'none';
+            cell.innerHTML = '-';
           }
         });
       }
@@ -1194,13 +1186,21 @@
         }
       });
       
-      // Initialize booking display on page load
+      // Store original schedule content on page load
       window.addEventListener('load', function() {
+        const cells = document.querySelectorAll('.schedule-table tbody td');
+        cells.forEach((cell, index) => {
+          originalScheduleContent[index] = cell.innerHTML;
+        });
         updateBookingDisplay();
       });
       
       // Initialize on DOM content loaded as well
       document.addEventListener('DOMContentLoaded', function() {
+        const cells = document.querySelectorAll('.schedule-table tbody td');
+        cells.forEach((cell, index) => {
+          originalScheduleContent[index] = cell.innerHTML;
+        });
         updateBookingDisplay();
       });
     </script>
