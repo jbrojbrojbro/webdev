@@ -1091,71 +1091,47 @@
 
       // Filter functionality
       function filterClasses(type) {
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
-        
         // Update active filter button
+        const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => btn.classList.remove('active'));
+        
+        // Find and activate the correct button
         filterBtns.forEach(btn => {
-          if (btn.textContent.toLowerCase().includes(type) || (type === 'all' && btn.textContent === 'All Classes')) {
+          const btnText = btn.textContent.toLowerCase();
+          if ((type === 'all' && btnText === 'all classes') ||
+              (type === 'strength' && btnText === 'strength') ||
+              (type === 'cardio' && btnText === 'cardio') ||
+              (type === 'yoga' && btnText === 'yoga') ||
+              (type === 'hiit' && btnText === 'hiit')) {
             btn.classList.add('active');
           }
         });
         
-        // Show all classes if 'all' is selected
-        if (type === 'all') {
-          tableRows.forEach(row => {
-            row.style.display = '';
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-              cell.style.display = '';
-            });
-          });
-          return;
-        }
+        // Get all table cells (excluding header)
+        const tableCells = document.querySelectorAll('.schedule-table tbody td');
         
-        // Filter by class type
-        tableRows.forEach(row => {
-          const cells = row.querySelectorAll('td');
-          let hasVisibleClass = false;
+        tableCells.forEach((cell, index) => {
+          // Always show time column (every 8th cell starting from 0)
+          if (index % 8 === 0) {
+            cell.style.display = '';
+            return;
+          }
           
-          cells.forEach((cell, cellIndex) => {
-            // Always show time column (first cell)
-            if (cellIndex === 0) {
-              cell.style.display = '';
-              return;
-            }
-            
-            const cellContent = cell.textContent.toLowerCase().trim();
-            
-            // Show empty cells
-            if (cellContent === '-') {
-              cell.style.display = '';
-              return;
-            }
-            
-            // Check if this specific cell matches the filter
-            let matches = false;
-            if (type === 'strength' && cellContent.includes('strength')) {
-              matches = true;
-            } else if (type === 'cardio' && cellContent.includes('cardio')) {
-              matches = true;
-            } else if (type === 'yoga' && (cellContent.includes('yoga') || cellContent.includes('flow'))) {
-              matches = true;
-            } else if (type === 'hiit' && (cellContent.includes('hiit') || cellContent.includes('bootcamp'))) {
-              matches = true;
-            }
-            
-            if (matches) {
-              cell.style.display = '';
-              hasVisibleClass = true;
-            } else {
-              cell.style.display = 'none';
-            }
-          });
+          // Show all if 'all' is selected
+          if (type === 'all') {
+            cell.style.display = '';
+            return;
+          }
           
-          // Show row if it has any visible classes
-          row.style.display = hasVisibleClass ? '' : 'none';
+          // Check if cell has the matching class
+          if (cell.classList.contains(type)) {
+            cell.style.display = '';
+          } else if (cell.textContent.trim() === '-') {
+            // Always show empty cells
+            cell.style.display = '';
+          } else {
+            cell.style.display = 'none';
+          }
         });
       }
 
