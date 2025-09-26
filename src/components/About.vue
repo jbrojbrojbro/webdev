@@ -358,7 +358,7 @@
   font-weight: normal;
   color: #00231C;
   opacity: 0.8;
-  line-height: 1.7;
+  line-height: 1.6;
   letter-spacing: 0.02em;
 }
 
