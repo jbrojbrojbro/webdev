@@ -105,7 +105,9 @@ onUnmounted(() => {
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
+  margin-left: 0;
   margin-right: auto;
+  display: block;
 }
 
 .logo-image:hover {
