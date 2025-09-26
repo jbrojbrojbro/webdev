@@ -76,6 +76,13 @@
   background: #D3D3D3;
 }
 
+/* Ensure keyboard navigation */
+.trainer-card:focus {
+  outline: 2px solid #155EBC;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+}
+
 .trainers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

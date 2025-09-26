@@ -115,10 +115,14 @@ body {
 }
 
 .btn-primary:focus {
+  outline: 2px solid #155EBC;
+  outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
 }
 
 .btn-secondary:focus {
+  outline: 2px solid #155EBC;
+  outline-offset: 2px;
   background: #155EBC;
   color: white;
   box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);

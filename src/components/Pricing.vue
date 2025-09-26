@@ -192,6 +192,20 @@ const formatDate = (dateString) => {
   background: white;
 }
 
+/* Ensure all interactive elements have keyboard focus */
+button:focus,
+.btn:focus,
+.size-btn:focus,
+.add-to-cart-btn:focus,
+.floating-cart:focus,
+.cart-btn:focus,
+.remove-item:focus,
+.close-cart-btn:focus {
+  outline: 2px solid #155EBC;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+}
+
 .pricing-card button:focus {
   outline: 2px solid #155EBC;
   outline-offset: 2px;

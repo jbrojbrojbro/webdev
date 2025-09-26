@@ -250,6 +250,15 @@ const hideEmailError = () => {
   transform: scale(1.2);
 }
 
+/* Ensure all interactive elements have keyboard focus */
+button:focus,
+input:focus,
+a:focus {
+  outline: 2px solid #155EBC;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+}
+
 .email-error-popup {
   position: fixed;
   top: 20px;
