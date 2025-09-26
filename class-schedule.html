@@ -1106,51 +1106,60 @@
             // Skip the time column (first cell)
             if (cell === cells[0]) {
               cell.style.display = ''; // Always show time column
+        // Show all classes first
+        if (type === 'all') {
+          tableRows.forEach(row => {
+            row.style.display = '';
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+              cell.style.display = '';
+            });
+          });
+          return;
+        }
+        
+        // Filter specific class types
+        tableRows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          let rowHasVisibleContent = false;
+          
+          cells.forEach((cell, index) => {
+            // Always show time column (first cell)
+            if (index === 0) {
+              cell.style.display = '';
               return;
             }
             
             const cellText = cell.textContent.toLowerCase().trim();
             
-            if (type === 'all') {
+            // Show empty cells (-)
+            if (cellText === '-') {
               cell.style.display = '';
-              if (cellText !== '-') {
-                rowHasVisibleContent = true;
-              }
+              return;
+            }
+            
+            // Check if cell matches the selected filter
+            let matches = false;
+            if (type === 'strength' && (cellText.includes('strength') || cellText.includes('tone'))) {
+              matches = true;
+            } else if (type === 'cardio' && cellText.includes('cardio')) {
+              matches = true;
+            } else if (type === 'yoga' && (cellText.includes('yoga') || cellText.includes('flow'))) {
+              matches = true;
+            } else if (type === 'hiit' && (cellText.includes('hiit') || cellText.includes('bootcamp'))) {
+              matches = true;
+            }
+            
+            if (matches) {
+              cell.style.display = '';
+              rowHasVisibleContent = true;
             } else {
-              let shouldShowCell = false;
-              
-              // Check if this specific cell matches the filter
-              if (cellText === '-') {
-                // Always show empty cells
-                shouldShowCell = true;
-              } else if (type === 'strength' && (cellText.includes('strength') || cellText.includes('tone'))) {
-                shouldShowCell = true;
-                rowHasVisibleContent = true;
-              } else if (type === 'cardio' && cellText.includes('cardio')) {
-                shouldShowCell = true;
-                rowHasVisibleContent = true;
-              } else if (type === 'yoga' && (cellText.includes('yoga') || cellText.includes('flow'))) {
-                shouldShowCell = true;
-                rowHasVisibleContent = true;
-              } else if (type === 'hiit' && (cellText.includes('hiit') || cellText.includes('bootcamp'))) {
-                shouldShowCell = true;
-                rowHasVisibleContent = true;
-              }
-              
-              if (shouldShowCell) {
-                cell.style.display = '';
-              } else {
-                cell.style.display = 'none';
-              }
+              cell.style.display = 'none';
             }
           });
           
-          // Show/hide the entire row based on whether it has visible content
-          if (type === 'all' || rowHasVisibleContent) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
+          // Hide entire row if no matching classes
+          row.style.display = rowHasVisibleContent ? '' : 'none';
         });
       };
 
