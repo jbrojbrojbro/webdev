@@ -1092,41 +1092,50 @@
       // Filter functionality
       const filterClasses = (type) => {
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const tableCells = document.querySelectorAll('.schedule-table tbody td');
+        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
         
         // Update active filter button
         filterBtns.forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
         
-        // Show/hide individual cells based on filter
-        tableCells.forEach(cell => {
-          // Skip time column (first column)
-          if (cell.parentElement.firstElementChild === cell) {
-            return;
-          }
+        tableRows.forEach(row => {
+          const cells = row.querySelectorAll('td:not(:first-child)'); // Skip time column
+          let hasMatchingClass = false;
           
-          if (type === 'all') {
-            // Show all cells
-            cell.style.display = '';
-          } else {
-            // Show only cells that match the selected type, hide others
-            if (cell.classList.contains(type)) {
+          cells.forEach(cell => {
+            const cellText = cell.textContent.toLowerCase();
+            
+            if (type === 'all') {
               cell.style.display = '';
             } else {
-              cell.style.display = 'none';
+              // Check if this specific cell contains the selected class type
+              let showCell = false;
+              
+              if (type === 'strength' && (cellText.includes('strength') || cellText.includes('tone'))) {
+                showCell = true;
+              } else if (type === 'cardio' && cellText.includes('cardio')) {
+                showCell = true;
+              } else if (type === 'yoga' && (cellText.includes('yoga') || cellText.includes('flow'))) {
+                showCell = true;
+              } else if (type === 'hiit' && (cellText.includes('hiit') || cellText.includes('bootcamp'))) {
+                showCell = true;
+              }
+              
+              if (showCell) {
+                cell.style.display = '';
+                hasMatchingClass = true;
+              } else if (cellText.trim() === '-') {
+                // Always show empty cells (dashes)
+                cell.style.display = '';
+              } else {
+                // Hide cells that don't match the filter
+                cell.style.display = 'none';
+              }
             }
-          }
-        });
-        
-        // Hide rows that have no visible classes after filtering
-        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
-        tableRows.forEach(row => {
-          const cells = row.querySelectorAll('td:not(:first-child)');
-          const visibleCells = Array.from(cells).filter(cell => 
-            cell.style.display !== 'none' && cell.textContent.trim() !== '-'
-          );
+          });
           
-          if (type === 'all' || visibleCells.length > 0) {
+          // Show/hide the entire row based on whether it has matching classes
+          if (type === 'all' || hasMatchingClass) {
             row.style.display = '';
           } else {
             row.style.display = 'none';
