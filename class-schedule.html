@@ -58,7 +58,17 @@
       }
 
       .logo-image {
-        height: 60px;
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+        margin-left: 0;
+        margin-right: auto;
+        display: block;
+      }
+
+      .logo-image:hover {
+        transform: scale(1.05);
       }
 
       .nav-links {
@@ -75,7 +85,8 @@
         font-size: 16px;
         line-height: 1.6;
         letter-spacing: 0.02em;
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
+        position: relative;
       }
 
       .nav-links a:hover {
@@ -86,6 +97,21 @@
         outline: 2px solid #155EBC;
         outline-offset: 2px;
         color: #155EBC;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #155EBC;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
       }
 
       .main-content {
@@ -182,3 +208,983 @@
         font-family: 'Arial', sans-serif;
         font-weight: bold;
         background: #20458E;
+        color: white;
+      }
+
+      .schedule-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .class-booking {
+        background: #f8f9fa;
+        border: 2px solid #155EBC;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 3rem;
+        text-align: center;
+      }
+
+      .booking-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #00231C;
+        margin-bottom: 1rem;
+      }
+
+      .booking-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        text-align: left;
+      }
+
+      .form-group label {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        color: #00231C;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input,
+      .form-group select {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #00231C;
+        border-radius: 5px;
+        background: white;
+        color: #00231C;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #155EBC;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .book-btn {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem 2rem;
+        background: #155EBC;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .book-btn:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(21, 94, 188, 0.3);
+      }
+
+      .book-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      /* Floating Cart Styles */
+      .floating-cart {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #155EBC;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 1.5rem;
+        font-family: 'Calibri', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(21, 94, 188, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1500;
+      }
+
+      .floating-cart:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(21, 94, 188, 0.4);
+      }
+
+      .floating-cart:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .cart-count {
+        background: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0.5rem;
+      }
+
+      /* Cart Modal Styles */
+      .cart-modal {
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .cart-modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #155EBC;
+        padding-bottom: 1rem;
+      }
+
+      .cart-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #00231C;
+        margin: 0;
+      }
+
+      .close-cart-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #00231C;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .close-cart-btn:hover {
+        background-color: #f0f0f0;
+        color: #155EBC;
+      }
+
+      .close-cart-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .cart-items {
+        margin-bottom: 2rem;
+      }
+
+      .cart-item {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-item-details h4 {
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #00231C;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .cart-item-details p {
+        font-family: 'Calibri', sans-serif;
+        font-size: 14px;
+        color: #00231C;
+        opacity: 0.7;
+        margin: 0;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
+      .cart-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .remove-item {
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-family: 'Calibri', sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .remove-item:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+      }
+
+      .remove-item:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .cart-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .cart-btn {
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .cart-btn.primary {
+        background: #155EBC;
+        color: white;
+      }
+
+      .cart-btn.primary:hover {
+        background: #634E99;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(21, 94, 188, 0.3);
+      }
+
+      .cart-btn.secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .cart-btn.secondary:hover {
+        background: #545b62;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(108, 117, 125, 0.3);
+      }
+
+      .cart-btn:focus {
+        outline: 2px solid #155EBC;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(21, 94, 188, 0.3);
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        font-family: 'Calibri', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 120px 0 60px;
+        }
+        
+        .section-title {
+          font-size: 24px;
+          line-height: 1.4;
+        }
+        
+        .section-subtitle {
+          font-size: 14px;
+          margin-bottom: 40px;
+        }
+        
+        .container {
+          padding: 0 16px;
+        }
+        
+        .nav-links {
+          gap: 0.75rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .nav-links a {
+          font-size: 13px;
+          padding: 0.25rem 0.5rem;
+        }
+        
+        .logo-image {
+          height: 60px;
+        }
+        
+        .schedule-filters {
+          justify-content: center;
+        }
+        
+        .filter-btn {
+          font-size: 14px;
+          padding: 0.5rem 1rem;
+        }
+        
+        .schedule-table th,
+        .schedule-table td {
+          padding: 0.5rem;
+          font-size: 14px;
+        }
+        
+        .booking-form {
+          grid-template-columns: 1fr;
+        }
+        
+        .class-booking {
+          padding: 1.5rem;
+          margin: 2rem 1rem 0;
+        }
+        
+        .booking-title {
+          font-size: 20px;
+        }
+        
+        .floating-cart {
+          bottom: 1rem;
+          right: 1rem;
+          padding: 0.75rem 1rem;
+          font-size: 12px;
+        }
+        
+        .cart-count {
+          width: 18px;
+          height: 18px;
+          font-size: 10px;
+        }
+        
+        .cart-modal {
+          padding: 1rem;
+        }
+        
+        .cart-modal-content {
+          padding: 1.5rem;
+          width: 95%;
+          max-height: 90vh;
+        }
+        
+        .cart-title {
+          font-size: 20px;
+        }
+        
+        .cart-btn {
+          padding: 0.75rem 1.5rem;
+          font-size: 14px;
+        }
+        
+        .cart-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        
+        .cart-item-actions {
+          justify-content: space-between;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 100px 0 40px;
+        }
+        
+        .container {
+          padding: 0 12px;
+        }
+        
+        .class-booking {
+          padding: 1rem;
+          margin: 1.5rem 0 0;
+        }
+        
+        .booking-title {
+          font-size: 18px;
+        }
+        
+        .form-group input,
+        .form-group select {
+          font-size: 14px;
+          padding: 0.625rem;
+        }
+        
+        .book-btn {
+          font-size: 14px;
+          padding: 0.875rem 1.5rem;
+        }
+        
+        .cart-modal-content {
+          padding: 1rem;
+          margin: 0.5rem;
+        }
+        
+        .cart-title {
+          font-size: 18px;
+        }
+        
+        .cart-btn {
+          padding: 0.75rem 1.25rem;
+          font-size: 13px;
+          width: 100%;
+        }
+        
+        .cart-actions {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <img src="https://i.postimg.cc/6QsGGWGh/ca6d1546-4b68-472e-bf9d-dae91e1b8979.jpg" alt="ABC Fitness Studio" class="logo-image" />
+          </div>
+          
+          <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/class-schedule.html">Class Schedule</a></li>
+            <li><a href="/merchandise.html">Merchandise</a></li>
+            <li><a href="/#trainers">Trainers</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        <h1 class="section-title">Class Schedule</h1>
+        <p class="section-subtitle">
+          Join our energizing group fitness classes led by certified instructors
+        </p>
+        
+        <div class="schedule-filters">
+          <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
+          <button class="filter-btn" onclick="filterClasses('strength')">Strength</button>
+          <button class="filter-btn" onclick="filterClasses('cardio')">Cardio</button>
+          <button class="filter-btn" onclick="filterClasses('yoga')">Yoga</button>
+          <button class="filter-btn" onclick="filterClasses('hiit')">HIIT</button>
+        </div>
+        
+        <div class="schedule-table-container">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>6:00 AM</strong></td>
+                <td class="strength">Morning Strength<br><small>Sarah J.</small></td>
+                <td class="cardio">Cardio Blast<br><small>Mike R.</small></td>
+                <td class="strength">Morning Strength<br><small>Sarah J.</small></td>
+                <td class="cardio">Cardio Blast<br><small>Mike R.</small></td>
+                <td class="strength">Morning Strength<br><small>Sarah J.</small></td>
+                <td class="yoga">Weekend Yoga<br><small>Emma C.</small></td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>7:30 AM</strong></td>
+                <td class="yoga">Morning Yoga<br><small>Emma C.</small></td>
+                <td class="hiit">HIIT Training<br><small>David K.</small></td>
+                <td class="yoga">Morning Yoga<br><small>Emma C.</small></td>
+                <td class="hiit">HIIT Training<br><small>David K.</small></td>
+                <td class="yoga">Morning Yoga<br><small>Emma C.</small></td>
+                <td class="strength">Weekend Strength<br><small>Mike R.</small></td>
+                <td class="yoga">Sunday Flow<br><small>Emma C.</small></td>
+              </tr>
+              <tr>
+                <td><strong>9:00 AM</strong></td>
+                <td class="hiit">HIIT Bootcamp<br><small>David K.</small></td>
+                <td class="strength">Strength & Tone<br><small>Sarah J.</small></td>
+                <td class="hiit">HIIT Bootcamp<br><small>David K.</small></td>
+                <td class="strength">Strength & Tone<br><small>Sarah J.</small></td>
+                <td class="hiit">HIIT Bootcamp<br><small>David K.</small></td>
+                <td class="cardio">Weekend Cardio<br><small>David K.</small></td>
+                <td class="strength">Sunday Strength<br><small>Sarah J.</small></td>
+              </tr>
+              <tr>
+                <td><strong>12:00 PM</strong></td>
+                <td class="cardio">Lunch Cardio<br><small>Mike R.</small></td>
+                <td class="yoga">Midday Yoga<br><small>Emma C.</small></td>
+                <td class="cardio">Lunch Cardio<br><small>Mike R.</small></td>
+                <td class="yoga">Midday Yoga<br><small>Emma C.</small></td>
+                <td class="cardio">Lunch Cardio<br><small>Mike R.</small></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>5:30 PM</strong></td>
+                <td class="strength">Evening Strength<br><small>Sarah J.</small></td>
+                <td class="cardio">Evening Cardio<br><small>Mike R.</small></td>
+                <td class="strength">Evening Strength<br><small>Sarah J.</small></td>
+                <td class="cardio">Evening Cardio<br><small>Mike R.</small></td>
+                <td class="strength">Evening Strength<br><small>Sarah J.</small></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>7:00 PM</strong></td>
+                <td class="hiit">Evening HIIT<br><small>David K.</small></td>
+                <td class="yoga">Evening Yoga<br><small>Emma C.</small></td>
+                <td class="hiit">Evening HIIT<br><small>David K.</small></td>
+                <td class="yoga">Evening Yoga<br><small>Emma C.</small></td>
+                <td class="hiit">Evening HIIT<br><small>David K.</small></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="class-booking">
+          <h3 class="booking-title">Book a Class</h3>
+          <p style="font-family: 'Calibri', sans-serif; font-size: 16px; color: #00231C; opacity: 0.7; line-height: 1.6; letter-spacing: 0.02em; margin-bottom: 2rem;">Reserve your spot in our popular classes. All bookings are free for members!</p>
+          
+          <form class="booking-form" onsubmit="bookClass(event)">
+            <div class="form-group">
+              <label for="member-name">Your Name</label>
+              <input type="text" id="member-name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="member-email">Email Address</label>
+              <input type="email" id="member-email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="class-day">Day</label>
+              <select id="class-day" required>
+                <option value="">Select a day</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="class-time">Time</label>
+              <select id="class-time" required>
+                <option value="">Select a time</option>
+                <option value="6:00 AM">6:00 AM</option>
+                <option value="7:30 AM">7:30 AM</option>
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="5:30 PM">5:30 PM</option>
+                <option value="7:00 PM">7:00 PM</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="class-type">Class Type</label>
+              <select id="class-type" required>
+                <option value="">Select class type</option>
+                <option value="strength">Strength Training</option>
+                <option value="cardio">Cardio</option>
+                <option value="yoga">Yoga</option>
+                <option value="hiit">HIIT</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Phone Number (Optional)</label>
+              <input type="tel" id="phone">
+            </div>
+          </form>
+          
+          <button type="submit" class="book-btn" onclick="bookClass(event)">Book My Class</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Floating Cart Button -->
+    <button class="floating-cart" onclick="showCartModal()" id="floating-cart-btn" style="display: none;">
+      View Bookings <span class="cart-count" id="booking-count">0</span>
+    </button>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal" style="display: none;">
+      <div class="cart-modal-content">
+        <div class="cart-header">
+          <h3 class="cart-title">Class Bookings</h3>
+          <button class="close-cart-btn" onclick="closeCartModal()">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items">
+          <!-- Booking items will be populated here -->
+        </div>
+        
+        <div class="cart-actions">
+          <button class="cart-btn primary" onclick="confirmBookings()">Confirm All Bookings</button>
+          <button class="cart-btn secondary" onclick="clearAllBookings()">Clear All</button>
+        </div>
+      </div>
+    </div>
+
+    <footer style="background: #D3D3D3; padding: 2rem 0; margin-top: 3rem;">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 2rem;">
+          <div style="flex: 1; min-width: 300px;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Subscribe to Our Newsletter</h4>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+              <input 
+                type="email" 
+                id="newsletter-email"
+                placeholder="Enter your email" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; flex: 1; padding: 0.75rem; border: 2px solid #00231C; border-radius: 5px; background: white; color: #00231C;"
+              />
+              <button 
+                onclick="subscribeNewsletter()" 
+                style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #00231C; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;"
+                onmouseover="this.style.background='#155EBC'" 
+                onmouseout="this.style.background='#00231C'"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
+          
+          <div style="text-align: right;">
+            <h4 style="font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; color: #00231C; margin-bottom: 1rem;">Follow Us</h4>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Facebook">📘</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Instagram">📷</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="Twitter">🐦</a>
+              <a href="#" style="font-size: 1.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.transform='scale(1.2)'" onblur="this.style.outline='none'; this.style.transform='scale(1)'" aria-label="YouTube">📺</a>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <a href="/" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Home</a>
+          <a href="/merchandise.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Merchandise</a>
+          <a href="/class-schedule.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Schedule</a>
+          <a href="/contact.html" style="font-family: 'Calibri', sans-serif; font-size: 16px; font-weight: bold; padding: 0.75rem 1.5rem; background: #155EBC; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease;" onmouseover="this.style.background='#634E99'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#155EBC'; this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #155EBC'; this.style.outlineOffset='2px'; this.style.boxShadow='0 0 0 3px rgba(21, 94, 188, 0.3)'" onblur="this.style.outline='none'; this.style.boxShadow='none'">Contact</a>
+        </div>
+        
+        <div style="text-align: center;">
+          <p style="font-family: 'Comfortaa', sans-serif; font-size: 15px; color: #00231C; opacity: 0.7; margin: 0;">&copy; 2025 ABC Fitness Studio. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Class booking functionality
+      const classBookings = [];
+
+      const updateBookingDisplay = () => {
+        const count = classBookings.length;
+        const countElement = document.getElementById('booking-count');
+        const viewBtn = document.getElementById('floating-cart-btn');
+        
+        if (count > 0) {
+          countElement.textContent = count;
+          viewBtn.style.display = 'block';
+        } else {
+          viewBtn.style.display = 'none';
+        }
+      };
+
+      const bookClass = (event) => {
+        event.preventDefault();
+        
+        const name = document.getElementById('member-name').value;
+        const email = document.getElementById('member-email').value;
+        const day = document.getElementById('class-day').value;
+        const time = document.getElementById('class-time').value;
+        const classType = document.getElementById('class-type').value;
+        const phone = document.getElementById('phone').value;
+        
+        if (!name || !email || !day || !time || !classType) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+        
+        // Check if this exact booking already exists
+        const existingBooking = classBookings.find(booking => 
+          booking.day === day && booking.time === time && booking.classType === classType
+        );
+        
+        if (existingBooking) {
+          alert('You already have a booking for this class!');
+          return;
+        }
+        
+        const booking = {
+          id: Date.now() + Math.random(),
+          name: name,
+          email: email,
+          day: day,
+          time: time,
+          classType: classType,
+          phone: phone,
+          bookedAt: new Date().toISOString()
+        };
+        
+        classBookings.push(booking);
+        alert(`Class booked successfully! ${classType} on ${day} at ${time}`);
+        
+        // Clear form
+        document.getElementById('member-name').value = '';
+        document.getElementById('member-email').value = '';
+        document.getElementById('class-day').value = '';
+        document.getElementById('class-time').value = '';
+        document.getElementById('class-type').value = '';
+        document.getElementById('phone').value = '';
+        
+        updateBookingDisplay();
+      };
+
+      const removeBooking = (bookingId) => {
+        const index = classBookings.findIndex(booking => booking.id == bookingId);
+        if (index > -1) {
+          classBookings.splice(index, 1);
+          updateBookingDisplay();
+          showCartModal();
+        }
+      };
+
+      const clearAllBookings = () => {
+        if (confirm('Are you sure you want to clear all bookings?')) {
+          classBookings.length = 0;
+          updateBookingDisplay();
+          closeCartModal();
+          alert('All bookings have been cleared.');
+        }
+      };
+
+      const showCartModal = () => {
+        const modal = document.getElementById('cartModal');
+        const cartItemsContainer = document.getElementById('cart-items');
+        
+        modal.style.display = 'block';
+        
+        // Clear existing content
+        cartItemsContainer.innerHTML = '';
+        
+        if (classBookings.length === 0) {
+          cartItemsContainer.innerHTML = '<div class="empty-cart">No class bookings yet.</div>';
+        } else {
+          classBookings.forEach(booking => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+              <div class="cart-item-details">
+                <h4>${booking.classType} - ${booking.day} at ${booking.time}</h4>
+                <p>Booked by: ${booking.name} (${booking.email})</p>
+                <p>Booked: ${new Date(booking.bookedAt).toLocaleDateString()}</p>
+              </div>
+              <div class="cart-item-actions">
+                <button class="remove-item" onclick="removeBooking('${booking.id}')">Cancel</button>
+              </div>
+            `;
+            cartItemsContainer.appendChild(cartItem);
+          });
+        }
+        
+        // Focus management for accessibility
+        const closeBtn = modal.querySelector('.close-cart-btn');
+        closeBtn.focus();
+      };
+
+      const closeCartModal = () => {
+        document.getElementById('cartModal').style.display = 'none';
+        
+        // Return focus to the view bookings button
+        document.getElementById('floating-cart-btn').focus();
+      };
+
+      const confirmBookings = () => {
+        if (classBookings.length === 0) {
+          alert('No bookings to confirm!');
+          return;
+        }
+        
+        const bookingList = classBookings.map(booking => 
+          `${booking.classType} on ${booking.day} at ${booking.time}`
+        ).join('\n');
+        
+        // Clear bookings after confirmation
+        classBookings.length = 0;
+        updateBookingDisplay();
+        closeCartModal();
+        
+        alert(`Thank you! Your class bookings have been confirmed:\n\n${bookingList}\n\nWe'll send confirmation emails shortly.`);
+      };
+
+      // Filter functionality
+      const filterClasses = (type) => {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
+        
+        // Update active filter button
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // Show/hide table cells based on filter
+        tableRows.forEach(row => {
+          const cells = row.querySelectorAll('td:not(:first-child)');
+          cells.forEach(cell => {
+            if (type === 'all') {
+              cell.style.display = '';
+            } else {
+              if (cell.classList.contains(type)) {
+                cell.style.display = '';
+              } else if (cell.textContent.trim() === '-') {
+                cell.style.display = '';
+              } else {
+                cell.style.display = 'none';
+              }
+            }
+          });
+        });
+      };
+
+      // Floating header functionality
+      let isScrolled = false;
+      
+      function handleScroll() {
+        const header = document.querySelector('.header');
+        const shouldBeScrolled = window.scrollY > 50;
+        
+        if (shouldBeScrolled !== isScrolled) {
+          isScrolled = shouldBeScrolled;
+          if (isScrolled) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      
+      function subscribeNewsletter() {
+        const email = document.getElementById('newsletter-email').value;
+        if (email) {
+          alert('Thank you for subscribing!');
+          document.getElementById('newsletter-email').value = '';
+        } else {
+          alert('Please enter a valid email address.');
+        }
+      }
+      
+      // Add focus styles for newsletter input and button
+      document.getElementById('newsletter-email').addEventListener('focus', function() {
+        this.style.outline = '2px solid #155EBC';
+        this.style.outlineOffset = '2px';
+        this.style.boxShadow = '0 0 0 3px rgba(21, 94, 188, 0.3)';
+      });
+      
+      document.getElementById('newsletter-email').addEventListener('blur', function() {
+        this.style.outline = 'none';
+        this.style.boxShadow = 'none';
+      });
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(event) {
+        const modal = document.getElementById('cartModal');
+        if (event.target === modal) {
+          closeCartModal();
+        }
+      });
+      
+      // Close modal with Escape key
+      window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          const modal = document.getElementById('cartModal');
+          if (modal.style.display === 'block') {
+            closeCartModal();
+          }
+        }
+      });
+      
+      // Initialize booking display on page load
+      window.addEventListener('load', function() {
+        updateBookingDisplay();
+      });
+      
+      // Initialize on DOM content loaded as well
+      document.addEventListener('DOMContentLoaded', function() {
+        updateBookingDisplay();
+      });
+    </script>
+  </body>
+</html>
