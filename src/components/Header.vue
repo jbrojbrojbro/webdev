@@ -45,7 +45,7 @@ onUnmounted(() => {
     <div class="container">
       <nav class="nav">
         <div class="logo">
-          <h2>ABC Fitness Studio</h2>
+          <img src="https://i.postimg.cc/6QsGGWGh/ca6d1546-4b68-472e-bf9d-dae91e1b8979.jpg" alt="ABC Fitness Studio" class="logo-image" />
         </div>
         
         <ul :class="['nav-links', { 'mobile-open': isMobileMenuOpen }]">
@@ -101,7 +101,7 @@ onUnmounted(() => {
 }
 
 .logo-image {
-  height: 50px;
+  height: 60px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -200,6 +200,10 @@ onUnmounted(() => {
   
   .logo h2 {
     font-size: 20px;
+  }
+  
+  .logo-image {
+    height: 45px;
   }
   
   .nav-links {
