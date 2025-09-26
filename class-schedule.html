@@ -1092,42 +1092,44 @@
       // Filter functionality
       const filterClasses = (type) => {
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
+        const tableCells = document.querySelectorAll('.schedule-table tbody td');
         
         // Update active filter button
         filterBtns.forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
         
-        // Show/hide table rows and cells based on filter
-        tableRows.forEach(row => {
-          const cells = row.querySelectorAll('td:not(:first-child)');
-          let hasMatchingClass = false;
+        // Show/hide individual cells based on filter
+        tableCells.forEach(cell => {
+          // Skip time column (first column)
+          if (cell.parentElement.firstElementChild === cell) {
+            return;
+          }
           
           if (type === 'all') {
-            // Show all rows and cells
-            row.style.display = '';
-            cells.forEach(cell => {
-              cell.style.display = '';
-            });
-            hasMatchingClass = true;
+            // Show all cells
+            cell.style.display = '';
           } else {
-            // Check if this row has any classes of the selected type
-            cells.forEach(cell => {
-              if (cell.classList.contains(type)) {
-                hasMatchingClass = true;
-              }
-            });
-            
-            // Show/hide the entire row based on whether it has matching classes
-            if (hasMatchingClass) {
-              row.style.display = '';
-              // Show all cells in rows that have matching classes
-              cells.forEach(cell => {
-                cell.style.display = '';
-              });
+            // Show only cells that match the selected type, hide others
+            if (cell.classList.contains(type)) {
+              cell.style.display = '';
             } else {
-              row.style.display = 'none';
+              cell.style.display = 'none';
             }
+          }
+        });
+        
+        // Hide rows that have no visible classes after filtering
+        const tableRows = document.querySelectorAll('.schedule-table tbody tr');
+        tableRows.forEach(row => {
+          const cells = row.querySelectorAll('td:not(:first-child)');
+          const visibleCells = Array.from(cells).filter(cell => 
+            cell.style.display !== 'none' && cell.textContent.trim() !== '-'
+          );
+          
+          if (type === 'all' || visibleCells.length > 0) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
           }
         });
       };
