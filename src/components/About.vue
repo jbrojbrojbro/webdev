@@ -226,6 +226,9 @@
 }
 
 .about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   margin-bottom: 4rem;
 }
 
@@ -522,6 +525,11 @@
 }
 
 @media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
   .mission-vision {
     grid-template-columns: 1fr;
     gap: 1.5rem;
