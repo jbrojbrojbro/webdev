@@ -1099,43 +1099,54 @@
         event.target.classList.add('active');
         
         tableRows.forEach(row => {
-          const cells = row.querySelectorAll('td:not(:first-child)'); // Skip time column
-          let hasMatchingClass = false;
+          const cells = row.querySelectorAll('td');
+          let rowHasVisibleContent = false;
           
           cells.forEach(cell => {
-            const cellText = cell.textContent.toLowerCase();
+            // Skip the time column (first cell)
+            if (cell === cells[0]) {
+              cell.style.display = ''; // Always show time column
+              return;
+            }
+            
+            const cellText = cell.textContent.toLowerCase().trim();
             
             if (type === 'all') {
               cell.style.display = '';
+              if (cellText !== '-') {
+                rowHasVisibleContent = true;
+              }
             } else {
-              // Check if this specific cell contains the selected class type
-              let showCell = false;
+              let shouldShowCell = false;
               
-              if (type === 'strength' && (cellText.includes('strength') || cellText.includes('tone'))) {
-                showCell = true;
+              // Check if this specific cell matches the filter
+              if (cellText === '-') {
+                // Always show empty cells
+                shouldShowCell = true;
+              } else if (type === 'strength' && (cellText.includes('strength') || cellText.includes('tone'))) {
+                shouldShowCell = true;
+                rowHasVisibleContent = true;
               } else if (type === 'cardio' && cellText.includes('cardio')) {
-                showCell = true;
+                shouldShowCell = true;
+                rowHasVisibleContent = true;
               } else if (type === 'yoga' && (cellText.includes('yoga') || cellText.includes('flow'))) {
-                showCell = true;
+                shouldShowCell = true;
+                rowHasVisibleContent = true;
               } else if (type === 'hiit' && (cellText.includes('hiit') || cellText.includes('bootcamp'))) {
-                showCell = true;
+                shouldShowCell = true;
+                rowHasVisibleContent = true;
               }
               
-              if (showCell) {
-                cell.style.display = '';
-                hasMatchingClass = true;
-              } else if (cellText.trim() === '-') {
-                // Always show empty cells (dashes)
+              if (shouldShowCell) {
                 cell.style.display = '';
               } else {
-                // Hide cells that don't match the filter
                 cell.style.display = 'none';
               }
             }
           });
           
-          // Show/hide the entire row based on whether it has matching classes
-          if (type === 'all' || hasMatchingClass) {
+          // Show/hide the entire row based on whether it has visible content
+          if (type === 'all' || rowHasVisibleContent) {
             row.style.display = '';
           } else {
             row.style.display = 'none';
