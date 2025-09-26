@@ -774,22 +774,21 @@
         
         // Create contact data object
         const contactData = {
-          id: Date.now() + Math.random(), // Unique ID
           name: name,
           email: email,
           phone: phone,
           message: message,
-          submittedAt: new Date().toISOString()
+          timestamp: new Date().toISOString()
         };
         
         // Get existing contacts from localStorage
-        let contacts = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+        let contacts = JSON.parse(localStorage.getItem('contactFormData') || '[]');
         
         // Add new contact to array
         contacts.push(contactData);
         
         // Save to localStorage
-        localStorage.setItem('contactSubmissions', JSON.stringify(contacts));
+        localStorage.setItem('contactFormData', JSON.stringify(contacts));
         
         // Show success notification
         showSuccessNotification(`Thank you for your message, ${name}!`);

@@ -909,7 +909,7 @@
         
         <div class="cart-actions">
           <button class="cart-btn primary" onclick="confirmBookings()">Confirm All Bookings</button>
-          <button class="cart-btn secondary" onclick="clearAllBookings()">Clear All</button>
+          <button class="cart-btn secondary" onclick="clearAllBookings()">Clear Bookings</button>
         </div>
       </div>
     </div>
@@ -1007,7 +1007,7 @@
         };
         
         classBookings.push(booking);
-        // Store in sessionStorage as well
+        // Store in sessionStorage
         sessionStorage.setItem('classBookings', JSON.stringify(classBookings));
         alert('Class booked successfully!');
         
@@ -1026,6 +1026,7 @@
         const index = classBookings.findIndex(booking => booking.id == bookingId);
         if (index > -1) {
           classBookings.splice(index, 1);
+          sessionStorage.setItem('classBookings', JSON.stringify(classBookings));
           updateBookingDisplay();
           showCartModal();
         }
@@ -1091,17 +1092,21 @@
           `${booking.classType} on ${booking.day} at ${booking.time}`
         ).join('\n');
         
+        // Store in sessionStorage before clearing
+        sessionStorage.setItem('classBookings', JSON.stringify(classBookings));
+        
         // Clear bookings after confirmation
         classBookings.length = 0;
         updateBookingDisplay();
         closeCartModal();
         
-        alert(`Thank you! Your class bookings have been confirmed:\n\n${bookingList}\n\nWe'll send confirmation emails shortly.`);
+        alert('Thank you for your booking!');
       };
 
       // Store original content on page load
       let originalScheduleContent = {};
       
+          sessionStorage.removeItem('classBookings');
       // Filter functionality
       function filterClasses(type) {
         // Update active filter button
@@ -1141,7 +1146,6 @@
             cell.innerHTML = originalScheduleContent[index];
           } else {
             cell.innerHTML = '-';
-          }
         });
       }
 
@@ -1215,6 +1219,13 @@
       
       // Initialize on DOM content loaded as well
       document.addEventListener('DOMContentLoaded', function() {
+        // Load existing bookings from sessionStorage
+        const savedBookings = sessionStorage.getItem('classBookings');
+        if (savedBookings) {
+          const parsedBookings = JSON.parse(savedBookings);
+          classBookings.push(...parsedBookings);
+        }
+        
         const cells = document.querySelectorAll('.schedule-table tbody td');
         cells.forEach((cell, index) => {
           originalScheduleContent[index] = cell.innerHTML;
