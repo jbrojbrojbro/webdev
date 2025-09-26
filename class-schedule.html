@@ -1098,22 +1098,37 @@
         filterBtns.forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
         
-        // Show/hide table cells based on filter
+        // Show/hide table rows and cells based on filter
         tableRows.forEach(row => {
           const cells = row.querySelectorAll('td:not(:first-child)');
-          cells.forEach(cell => {
-            if (type === 'all') {
+          let hasMatchingClass = false;
+          
+          if (type === 'all') {
+            // Show all rows and cells
+            row.style.display = '';
+            cells.forEach(cell => {
               cell.style.display = '';
-            } else {
+            });
+            hasMatchingClass = true;
+          } else {
+            // Check if this row has any classes of the selected type
+            cells.forEach(cell => {
               if (cell.classList.contains(type)) {
-                cell.style.display = '';
-              } else if (cell.textContent.trim() === '-') {
-                cell.style.display = '';
-              } else {
-                cell.style.display = 'none';
+                hasMatchingClass = true;
               }
+            });
+            
+            // Show/hide the entire row based on whether it has matching classes
+            if (hasMatchingClass) {
+              row.style.display = '';
+              // Show all cells in rows that have matching classes
+              cells.forEach(cell => {
+                cell.style.display = '';
+              });
+            } else {
+              row.style.display = 'none';
             }
-          });
+          }
         });
       };
 
