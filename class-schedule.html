@@ -1106,7 +1106,6 @@
       // Store original content on page load
       let originalScheduleContent = {};
       
-          sessionStorage.removeItem('classBookings');
       // Filter functionality
       function filterClasses(type) {
         // Update active filter button
@@ -1146,6 +1145,7 @@
             cell.innerHTML = originalScheduleContent[index];
           } else {
             cell.innerHTML = '-';
+          }
         });
       }
 
