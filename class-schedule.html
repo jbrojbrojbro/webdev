@@ -994,7 +994,12 @@
         
         // Update active button
         filterBtns.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+       // Find the clicked button and make it active
+       filterBtns.forEach(btn => {
+         if (btn.textContent.toLowerCase().includes(type) || (type === 'all' && btn.textContent === 'All Classes')) {
+           btn.classList.add('active');
+         }
+       });
         
         // Show/hide classes based on filter
         tableCells.forEach(cell => {
@@ -1002,15 +1007,14 @@
           
           if (type === 'all') {
             cell.style.display = '';
-            if (cell.textContent.trim() === '-') {
-              cell.textContent = '-';
-            }
+           cell.style.opacity = '1';
           } else {
             if (cell.classList.contains(type)) {
               cell.style.display = '';
+             cell.style.opacity = '1';
             } else {
-              cell.style.display = '';
-              cell.textContent = '-';
+             cell.style.display = 'table-cell';
+             cell.style.opacity = '0.3';
             }
           }
         });
