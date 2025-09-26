@@ -1090,22 +1090,18 @@
       };
 
       // Filter functionality
-      const filterClasses = (type) => {
+      function filterClasses(type) {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const tableRows = document.querySelectorAll('.schedule-table tbody tr');
         
         // Update active filter button
         filterBtns.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        filterBtns.forEach(btn => {
+          if (btn.textContent.toLowerCase().includes(type) || (type === 'all' && btn.textContent === 'All Classes')) {
+            btn.classList.add('active');
+          }
+        });
         
-        tableRows.forEach(row => {
-          const cells = row.querySelectorAll('td');
-          let rowHasVisibleContent = false;
-          
-          cells.forEach(cell => {
-            // Skip the time column (first cell)
-            if (cell === cells[0]) {
-              cell.style.display = ''; // Always show time column
         // Show all classes first
         if (type === 'all') {
           tableRows.forEach(row => {
@@ -1161,7 +1157,7 @@
           // Hide entire row if no matching classes
           row.style.display = rowHasVisibleContent ? '' : 'none';
         });
-      };
+      }
 
       // Floating header functionality
       let isScrolled = false;
