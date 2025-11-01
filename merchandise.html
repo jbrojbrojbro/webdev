@@ -1127,40 +1127,53 @@
     </footer>
 
     <script>
-      // Cart functionality - exact copy from home page
-      const cartItems = [];
+      // Cart functionality - using sessionStorage
+      const getCartItems = () => {
+        return JSON.parse(sessionStorage.getItem('merchandiseCart') || '[]');
+      };
+
+      const saveCartItems = (items) => {
+        sessionStorage.setItem('merchandiseCart', JSON.stringify(items));
+      };
+
       let showEmailError = false;
       let emailErrorMessage = '';
 
       const cartTotal = () => {
+        const cartItems = getCartItems();
         return cartItems.reduce((sum, item) => sum + item.price, 0);
       };
 
       const addToCart = (planName, price) => {
+        const cartItems = getCartItems();
+
         // Check if plan is already in cart
         const existingItem = cartItems.find(item => item.name === planName);
-        
+
         if (existingItem) {
           alert('This item is already in your cart!');
           return;
         }
-        
+
         const item = {
           id: Date.now() + Math.random(),
           name: planName,
           price: price,
           addedAt: new Date().toISOString()
         };
-        
+
         cartItems.push(item);
+        saveCartItems(cartItems);
         alert(`${planName} added to cart!`);
         updateCartDisplay();
       };
 
       const removeFromCart = (itemId) => {
+        const cartItems = getCartItems();
         const index = cartItems.findIndex(item => item.id == itemId);
         if (index > -1) {
           cartItems.splice(index, 1);
+          saveCartItems(cartItems);
           updateCartDisplay();
           showCartModal();
         }
@@ -1168,7 +1181,7 @@
 
       const clearAllItems = () => {
         if (confirm('Are you sure you want to clear your cart?')) {
-          cartItems.length = 0;
+          saveCartItems([]);
           updateCartDisplay();
           closeCartModal();
           alert('Cart has been cleared.');
@@ -1176,15 +1189,16 @@
       };
 
       const showCartModal = () => {
+        const cartItems = getCartItems();
         const modal = document.getElementById('cartModal');
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalContainer = document.getElementById('cart-total-section');
-        
+
         modal.style.display = 'block';
-        
+
         // Clear existing content
         cartItemsContainer.innerHTML = '';
-        
+
         if (cartItems.length === 0) {
           cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
           cartTotalContainer.style.display = 'none';
@@ -1205,11 +1219,11 @@
             `;
             cartItemsContainer.appendChild(cartItem);
           });
-          
+
           // Update total
           document.getElementById('cart-total').textContent = cartTotal();
         }
-        
+
         // Focus management for accessibility
         const closeBtn = modal.querySelector('.close-cart-btn');
         closeBtn.focus();
@@ -1223,27 +1237,30 @@
       };
 
       const checkout = () => {
+        const cartItems = getCartItems();
+
         if (cartItems.length === 0) {
           alert('Your cart is empty!');
           return;
         }
-        
+
         const total = cartTotal();
         const planNames = cartItems.map(item => item.name).join(', ');
-        
+
         // Clear cart after checkout
-        cartItems.length = 0;
+        saveCartItems([]);
         updateCartDisplay();
         closeCartModal();
-        
-        alert(`Thank you for choosing ABC Fitness Studio! You've selected: ${planNames}. Total: $${total}/month. We'll contact you to complete your membership registration.`);
+
+        alert(`Thank you for choosing ABC Fitness Studio! You've selected: ${planNames}. Total: $${total}. We'll contact you to complete your order.`);
       };
 
       const updateCartDisplay = () => {
+        const cartItems = getCartItems();
         const count = cartItems.length;
         const countElement = document.getElementById('booking-count');
         const viewBtn = document.getElementById('floating-cart-btn');
-        
+
         if (count > 0) {
           countElement.textContent = count;
           viewBtn.style.display = 'block';
